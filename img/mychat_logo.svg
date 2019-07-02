@@ -1,0 +1,20 @@
+<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+ <title/>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path id="svg_1" fill="#ff9700" d="m16,7l-3,2l0,-3.7929a0.5,0.5 0 0 1 0.8536,-0.3535l2.1464,2.1464z"/>
+  <path id="svg_2" fill="#ff9700" d="m18,7l3,2l0,-3.7929a0.5,0.5 0 0 0 -0.8536,-0.3535l-2.1464,2.1464z"/>
+  <path id="svg_3" fill="#424b54" d="m6,13l-2,0l0,-8a1,1 0 0 1 1,-1l0,0a1,1 0 0 1 1,1l0,8z"/>
+  <path id="svg_4" fill="#424b54" d="m5.5,22l0,0a1.5,1.5 0 0 1 -1.5,-1.5l0,-7.5l3,0l0,7.5a1.5,1.5 0 0 1 -1.5,1.5z"/>
+  <path id="svg_5" fill="#424b54" d="m15.5,22l0,0a1.5,1.5 0 0 1 -1.5,-1.5l0,-7.5l3,0l0,7.5a1.5,1.5 0 0 1 -1.5,1.5z"/>
+  <path id="svg_6" fill="#424b54" d="m17,19c-3,-4 -10,-4 -13,0l0,-7c3,-4 10,-4 13,0l0,7z"/>
+  <path id="svg_7" fill="#424b54" d="m17,14l0,0a4,4 0 0 1 -4,-4l0,-3l8,0l0,3a4.00005,4.00005 0 0 1 -4,4z"/>
+  <circle id="svg_8" fill="#fff" r="0.75" cy="9.75" cx="15.25"/>
+  <circle id="svg_9" fill="#fff" r="0.75" cy="9.75" cx="19"/>
+ </g>
+</svg>

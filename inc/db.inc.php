@@ -1,6 +1,7 @@
 <?php
      /**
-      * Database-Management
+      * DatabaseConnection
+      * created 2019-10-08
       */
      class DatabaseConnection
      {
@@ -10,9 +11,9 @@
           public static function connect()
           {
                // DEFINE PARAMETERS
-               $db_host = '';
-               $db_dbname = '';
-               $db_user = '';
+               $db_host = '127.0.0.1';
+               $db_dbname = 'mychat';
+               $db_user = 'root';
                $db_pass = '';
 
                // INITIALIZE PDO (UTF-8)

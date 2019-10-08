@@ -2,15 +2,26 @@
 
      // INITIALIZE
      require '../inc/db.inc.php';
+     require '../inc/login.inc.php';
+     require '../inc/security/xss.inc.php';
      $pdo = DatabaseConnection::connect();
 
      // GET USER AUTH
-     $user = $_POST['user'];
+     $email = $_POST['email'];
      $password = $_POST['password'];
+
+     // CHECK USER AUTH
+     $loginHandler = new LoginHandler();
+     if (!$loginHandler->LoginUser($email, $password)) {
+          // NOT AUTHENTICATED
+          die('no_auth');
+     }
+     // GET USR-ID
+     $usrID = $loginHandler->usrID;
 
      // GENERATE RANDOM TOKEN (user-identifier enc-id, user-token 512bit random)
      $crypto = true;
-     $usertoken = bin2hex(openssl_random_pseudo_bytes(512, $crypto));
+     $logintoken = bin2hex(openssl_random_pseudo_bytes(512, $crypto));
 
 
      // CHECK IF ALREADY IN DATABASE AS A ID
@@ -19,12 +30,11 @@
      while ($iD) {
           $iD = false;
 
-          $useridentifier = bin2hex(openssl_random_pseudo_bytes($bitlength, $crypto));
+          $loginIdentifier = bin2hex(openssl_random_pseudo_bytes($bitlength, $crypto));
 
           // CHECK DATABASE AND SET $iD
-          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
           $stmt = $pdo->prepare("SELECT * FROM `mc_logins` WHERE `login_userIdentifier`=:userID");
-          $stmt->bindParam(':userID', strval($useridentifier));
+          $stmt->bindParam(':userID', strval($loginIdentifier));
           $stmt->execute();
 
           $rowCount = $stmt->rowCount();
@@ -35,8 +45,18 @@
           }
      }
 
+     // SET EXPIRE TO 24h
+     $expires = time();
+     $expires += 24 * 60 * 60;
+
      // SAVE IN DATABASE (table mc_logins)
+     $stmt = $pdo->prepare("INSERT INTO `mc_logins` (`login_userIdentifier`, `login_token`, `login_expires`, `usr_id`) VALUES (:loginIdentifier, :token, :expires, :usrID)");
+     $stmt->bindParam(':loginIdentifier', strval($loginIdentifier));
+     $stmt->bindParam(':token', strval($logintoken));
+     $stmt->bindParam(':expires', strval($expires));
+     $stmt->bindParam(':usrID', strval($usrID));
+     $stmt->execute();
 
      // OUTPUT TO USER
-
+     die(PreventXSS($loginIdentifier) . '|' . PreventXSS($logintoken));
 ?>

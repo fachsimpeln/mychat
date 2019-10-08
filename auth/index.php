@@ -11,7 +11,7 @@
      $password = $_POST['password'];
 
      // CHECK USER AUTH
-     $loginHandler = new LoginHandler();
+     $loginHandler = new LoginHandler($pdo);
      if (!$loginHandler->LoginUser($email, $password)) {
           // NOT AUTHENTICATED
           die('no_auth');

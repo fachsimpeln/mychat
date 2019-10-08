@@ -16,6 +16,7 @@
                // INITIALIZE PDO (UTF-8)
                try {
                     $pdo = new PDO('mysql:host=' . $db_host . ';dbname=' . $db_dbname . ';charset=utf8', $db_user, $db_pass);
+                    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
                } catch (\Exception $e) {
                     // ERROR CREATING DATABASE CONNECTION
                     return null;

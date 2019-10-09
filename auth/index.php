@@ -57,6 +57,8 @@
      $stmt->bindParam(':usrID', strval($usrID));
      $stmt->execute();
 
+     $loginHandler->SetToken($loginIdentifier, $logintoken, $expires);
+
      // OUTPUT TO USER
      die(PreventXSS($loginIdentifier) . '|' . PreventXSS($logintoken));
 ?>

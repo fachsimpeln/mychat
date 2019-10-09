@@ -7,8 +7,8 @@
      $pdo = DatabaseConnection::connect();
 
      // GET USER AUTH
-     $email = $_POST['email'];
-     $password = $_POST['password'];
+     $email = $_REQUEST['email'];
+     $password = $_REQUEST['password'];
 
      // CHECK USER AUTH
      $loginHandler = new LoginHandler($pdo);

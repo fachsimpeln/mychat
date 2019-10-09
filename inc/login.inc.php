@@ -4,9 +4,14 @@
       */
      class LoginHandler
      {
+          // USER INFO
           public $usrID = null;
           public $usrUsername = null;
 
+          // ERROR MESSAGES
+          public $errorMessage = null;
+
+          // PDO VIA CONTRUCTOR
           private $pdo = null;
 
           public function __construct($pdo)
@@ -24,6 +29,7 @@
                // CHECK IF USER EXISTS
                $rowCount = $stmt->rowCount();
                if ($rowCount == 0) {
+                    $this->errorMessage = 'user_does_not_exist';
                     return false;
                }
 
@@ -35,10 +41,11 @@
                     $this->usrUsername = $userInfo['usr_username'];
                     return true;
                }
+               $this->errorMessage = 'wrong_password';
                return false;
           }
 
+
+
      }
-
-
 ?>

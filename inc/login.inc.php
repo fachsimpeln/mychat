@@ -5,6 +5,8 @@
      class LoginHandler
      {
           public $usrID = null;
+          public $usrUsername = null;
+
           private $pdo = null;
 
           public function __construct($pdo)
@@ -15,7 +17,7 @@
           public function LoginUser($email, $password)
           {
 
-               $stmt = $this->pdo->prepare("SELECT `usr_id`, `usr_password` FROM `mc_users` WHERE `usr_email`=:email");
+               $stmt = $this->pdo->prepare("SELECT `usr_id`, `usr_username`, `usr_password` FROM `mc_users` WHERE `usr_email`=:email");
                $stmt->bindParam(':email', strval($email));
                $stmt->execute();
 
@@ -29,7 +31,8 @@
                $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
                if (password_verify($password, $userInfo['usr_password'])) {
-                    $usrID = $userInfo['usr_id'];
+                    $this->usrID = $userInfo['usr_id'];
+                    $this->usrUsername = $userInfo['usr_username'];
                     return true;
                }
                return false;

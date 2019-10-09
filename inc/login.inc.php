@@ -91,5 +91,27 @@
                return false;
           }
 
+          public function SetToken($loginIdentifier, $loginToken, $expires)
+          {
+               setcookie("mc_lid", $loginIdentifier, intval($expires));
+               setcookie("mc_lto", $loginToken, intval($expires));
+          }
+
+          public function GetToken($POSTParams)
+          {
+               $loginInfo = array();
+               if (isset($_COOKIE["mc_lid"]) && isset($_COOKIE["mc_lto"])) {
+                    $loginInfo['loginIdentifier'] = $_COOKIE["mc_lid"];
+                    $loginInfo['loginToken'] = $_COOKIE["mc_lto"];
+                    return $loginInfo;
+               }
+               if (isset($POSTParams['lid']) && isset($POSTParams['lto'])) {
+                    $loginInfo['loginIdentifier'] = $POSTParams['lid'];
+                    $loginInfo['loginToken'] = $POSTParams['lto'];
+                    return $loginInfo;
+               }
+               return null;
+          }
+
      }
 ?>

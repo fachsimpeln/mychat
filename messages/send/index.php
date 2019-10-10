@@ -6,6 +6,12 @@
      require '../../inc/security/xss.inc.php';
      $pdo = DatabaseConnection::connect();
 
+     // CHECK MESSAGE LENGTH
+     $message = $_REQUEST['message'];
+     if (strlen($message) > 120) {
+          die('message_too_long');
+     }
+
      // CHECK USER AUTH
      $loginHandler = new LoginHandler($pdo);
 
@@ -17,7 +23,8 @@
      // GET USR-ID
      $usrID = $loginHandler->usrID;
 
-     // METHOD (GROUP, PRIVATE, PUBLIC)
+     // RECEIVER TYPE (GROUP, PRIVATE, PUBLIC)
+     $receiverType = $_REQUEST['rtype'];
 
      // CHECK PERMISSION
 

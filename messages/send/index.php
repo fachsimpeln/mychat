@@ -25,7 +25,19 @@
 
      // RECEIVER TYPE (GROUP, PRIVATE, PUBLIC)
      $receiverType = $_REQUEST['rtype'];
+     $receiverUsername = $_REQUEST['receiver'];
 
      // CHECK PERMISSION
+     $permissions = new PermissionHandler($pdo);
+     if ($receiverType === 'private') {
+          // CHECK IF RIGHT TO SEND
+          if (!$permissions->GetChatPermission($usrID, $receiverUsername)) {
+               // NO PERMISSION
+               die('no_permission');
+          }
+          // SEND MESSAGE
+
+     }
+
 
 ?>

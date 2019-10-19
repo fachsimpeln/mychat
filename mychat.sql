@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 18. Okt 2019 um 17:44
+-- Erstellungszeit: 19. Okt 2019 um 20:29
 -- Server-Version: 10.1.40-MariaDB
 -- PHP-Version: 7.3.5
 
@@ -25,6 +25,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `mc_devicecookies`
+--
+
+CREATE TABLE `mc_devicecookies` (
+  `dc_id` int(11) NOT NULL,
+  `dc_token` text COLLATE utf8_bin NOT NULL,
+  `dc_attempts` int(11) NOT NULL DEFAULT '0',
+  `dc_locked_until` timestamp NULL DEFAULT NULL,
+  `usr_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Daten für Tabelle `mc_devicecookies`
+--
+
+INSERT INTO `mc_devicecookies` (`dc_id`, `dc_token`, `dc_attempts`, `dc_locked_until`, `usr_id`) VALUES
+(1, 'abcdef', 3, NULL, 1),
+(2, 'test123', 0, NULL, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `mc_friendlist`
 --
 
@@ -32,6 +54,7 @@ CREATE TABLE `mc_friendlist` (
   `fr_id` int(11) NOT NULL,
   `usr_id1` int(11) NOT NULL,
   `usr_id2` int(11) NOT NULL,
+  `fr_accepted` int(11) NOT NULL DEFAULT '0',
   `fr_since` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -39,8 +62,8 @@ CREATE TABLE `mc_friendlist` (
 -- Daten für Tabelle `mc_friendlist`
 --
 
-INSERT INTO `mc_friendlist` (`fr_id`, `usr_id1`, `usr_id2`, `fr_since`) VALUES
-(1, 2, 1, '2019-10-18 15:19:12');
+INSERT INTO `mc_friendlist` (`fr_id`, `usr_id1`, `usr_id2`, `fr_accepted`, `fr_since`) VALUES
+(1, 2, 1, 1, '2019-10-18 15:19:12');
 
 -- --------------------------------------------------------
 
@@ -108,6 +131,26 @@ INSERT INTO `mc_logins` (`login_id`, `login_userIdentifier`, `login_token`, `log
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `mc_loginsfailed`
+--
+
+CREATE TABLE `mc_loginsfailed` (
+  `fl_id` int(11) NOT NULL,
+  `fl_user` varchar(200) COLLATE utf8_bin NOT NULL,
+  `fl_attempts` int(11) NOT NULL DEFAULT '1',
+  `fl_locked_until` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Daten für Tabelle `mc_loginsfailed`
+--
+
+INSERT INTO `mc_loginsfailed` (`fl_id`, `fl_user`, `fl_attempts`, `fl_locked_until`) VALUES
+(1, 'fachsimpeln', 3, '2019-10-19 18:33:09');
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `mc_users`
 --
 
@@ -130,6 +173,13 @@ INSERT INTO `mc_users` (`usr_id`, `usr_username`, `usr_email`, `usr_password`, `
 --
 -- Indizes der exportierten Tabellen
 --
+
+--
+-- Indizes für die Tabelle `mc_devicecookies`
+--
+ALTER TABLE `mc_devicecookies`
+  ADD PRIMARY KEY (`dc_id`),
+  ADD KEY `usr_id` (`usr_id`);
 
 --
 -- Indizes für die Tabelle `mc_friendlist`
@@ -162,6 +212,13 @@ ALTER TABLE `mc_logins`
   ADD KEY `usr_id` (`usr_id`);
 
 --
+-- Indizes für die Tabelle `mc_loginsfailed`
+--
+ALTER TABLE `mc_loginsfailed`
+  ADD PRIMARY KEY (`fl_id`),
+  ADD UNIQUE KEY `fl_user` (`fl_user`);
+
+--
 -- Indizes für die Tabelle `mc_users`
 --
 ALTER TABLE `mc_users`
@@ -172,6 +229,12 @@ ALTER TABLE `mc_users`
 --
 -- AUTO_INCREMENT für exportierte Tabellen
 --
+
+--
+-- AUTO_INCREMENT für Tabelle `mc_devicecookies`
+--
+ALTER TABLE `mc_devicecookies`
+  MODIFY `dc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT für Tabelle `mc_friendlist`
@@ -198,6 +261,12 @@ ALTER TABLE `mc_logins`
   MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT für Tabelle `mc_loginsfailed`
+--
+ALTER TABLE `mc_loginsfailed`
+  MODIFY `fl_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT für Tabelle `mc_users`
 --
 ALTER TABLE `mc_users`
@@ -206,6 +275,12 @@ ALTER TABLE `mc_users`
 --
 -- Constraints der exportierten Tabellen
 --
+
+--
+-- Constraints der Tabelle `mc_devicecookies`
+--
+ALTER TABLE `mc_devicecookies`
+  ADD CONSTRAINT `mc_devicecookies_ibfk_1` FOREIGN KEY (`usr_id`) REFERENCES `mc_users` (`usr_id`);
 
 --
 -- Constraints der Tabelle `mc_friendlist`

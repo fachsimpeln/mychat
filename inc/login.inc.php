@@ -9,7 +9,7 @@
           public $usrUsername = null;
 
           // CONFIGURATION
-          private $maxAttempts = 3;
+          private $maxAttempts = 5;
 
           // ERROR MESSAGES
           public $errorMessage = null;
@@ -152,7 +152,8 @@
                $stmt->execute();
 
                // UPDATE LOCKED TIME
-               $stmt = $this->pdo->prepare("UPDATE `mc_loginsfailed` SET `fl_locked_until`=(CURRENT_TIMESTAMP + INTERVAL '10' MINUTE) WHERE `fl_attempts` >= 3 AND `fl_locked_until` IS NULL");
+               $stmt = $this->pdo->prepare("UPDATE `mc_loginsfailed` SET `fl_locked_until`=(CURRENT_TIMESTAMP + INTERVAL '10' MINUTE) WHERE `fl_attempts` >= :max AND `fl_locked_until` IS NULL");
+               $stmt->bindParam(':max', intval($this->maxAttempts));
                $stmt->execute();
           }
 

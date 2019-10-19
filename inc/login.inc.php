@@ -21,6 +21,8 @@
 
           public function LoginUser($email, $password)
           {
+               // STRIP WHITESPACE FROM BEGINNING AND END OF EMAIL
+               $email = trim($email);
 
                $stmt = $this->pdo->prepare("SELECT `usr_id`, `usr_username`, `usr_password` FROM `mc_users` WHERE `usr_email`=:email");
                $stmt->bindParam(':email', strval($email));

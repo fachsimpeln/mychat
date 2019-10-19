@@ -8,6 +8,9 @@
           public $usrID = null;
           public $usrUsername = null;
 
+          // CONFIGURATION
+          private $maxAttempts = 3;
+
           // ERROR MESSAGES
           public $errorMessage = null;
 
@@ -113,6 +116,91 @@
                     return $loginInfo;
                }
                return null;
+          }
+
+          // Brute-Force Protection
+          // https://www.owasp.org/index.php/Slow_Down_Online_Guessing_Attacks_with_Device_Cookies
+
+          private function CheckAttempt($user)
+          {
+
+          }
+
+          private function AddDeviceAttempt($usrID)
+          {
+               // BLOCK TIME SQL
+               // CURRENT_TIMESTAMP + INTERVAL '10' MINUTE
+
+               $devicecookie = $_COOKIE['mc_dc'];
+          }
+
+          private function AddUnknownAttempt($user)
+          {
+               // CHECK IF ALREADY IN DB
+               $stmt = $this->pdo->prepare("SELECT `fl_id` FROM `mc_loginsfailed` WHERE `fl_user`=:user");
+               $stmt->bindParam(':user', strval($user));
+               $stmt->execute();
+
+               // ADD ATTEMPT
+               $rowCount = $stmt->rowCount();
+               if ($rowCount == 0) {
+                    $stmt = $this->pdo->prepare("INSERT INTO `mc_loginsfailed`(`fl_user`) VALUES (:user)");
+               } else {
+                    $stmt = $this->pdo->prepare("UPDATE `mc_loginsfailed` SET `fl_attempts`=`fl_attempts`+1 WHERE `fl_user`=:user");
+               }
+               $stmt->bindParam(':user', strval($user));
+               $stmt->execute();
+
+               // UPDATE LOCKED TIME
+               $stmt = $this->pdo->prepare("UPDATE `mc_loginsfailed` SET `fl_locked_until`=(CURRENT_TIMESTAMP + INTERVAL '10' MINUTE) WHERE `fl_attempts` >= 3 AND `fl_locked_until` IS NULL");
+               $stmt->execute();
+          }
+
+          private function CheckDeviceCookie($usrID)
+          {
+               // GET DEVICE COOKIE
+               $devicecookie = $_COOKIE['mc_dc'];
+
+               $stmt = $this->pdo->prepare("SELECT `dc_id` FROM `mc_devicecookies` WHERE (`usr_id`=:usrid AND `dc_token`=:token AND (`dc_locked_until` IS NULL OR `dc_locked_until` < CURRENT_TIMESTAMP))");
+               $stmt->bindParam(':usrid', strval($usrID));
+               $stmt->bindParam(':token', strval($devicecookie));
+               $stmt->execute();
+
+               // CHECK IF LOGIN EXISTS
+               $rowCount = $stmt->rowCount();
+               if ($rowCount == 0) {
+                    return false;
+               }
+               return true;
+          }
+
+          private function IssueNewDeviceCookie($usrID)
+          {
+               // GENERATE NEW DEVICE COOKIE
+               $crypto = true;
+               $devicecookie = bin2hex(openssl_random_pseudo_bytes(64, $crypto));
+
+               // REMOVE OLD DEVICE COOKIE FROM DB AND ADD NEW ONE
+               if (isset($_COOKIE['mc_dc'])) {
+                    $stmt = $this->pdo->prepare("UPDATE `mc_devicecookies` SET `dc_token`=:newtoken, `dc_attempts`=0, `dc_locked_until`=NULL WHERE (`usr_id`=:usrid AND `dc_token`=:oldtoken)");
+
+                    $stmt->bindParam(':oldtoken', strval($_COOKIE['mc_dc']));
+               } else {
+                    $stmt = $this->pdo->prepare("INSERT INTO `mc_devicecookies`(`dc_token`, `usr_id`) VALUES (:newtoken, :usrid)");
+               }
+
+               $stmt->bindParam(':usrid', strval($usrID));
+               $stmt->bindParam(':newtoken', strval($devicecookie));
+               $stmt->execute();
+
+               // SET COOKIE TO USERS BROWSER
+               $expires = time();
+               $expires += 24 * 60 * 60 * 182; // 24h * 182 = 182 Days = half year
+               setcookie("mc_dc", $devicecookie, intval($expires));
+          }
+
+          private function ResetAttempts($user) {
+
           }
 
      }

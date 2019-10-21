@@ -46,7 +46,8 @@
                $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
                if (!ValidateAttempt($email, $userInfo['usr_id'])) {
-                    die('brute-force-protection-' . $this->attemptTime . '-min');
+                    $this->errorMessage = 'brute_force_protection_' . $this->attemptTime . '_min';
+                    return false;
                }
 
                if (password_verify($password, $userInfo['usr_password'])) {

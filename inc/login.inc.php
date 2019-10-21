@@ -35,6 +35,9 @@
                // CHECK IF USER EXISTS
                $rowCount = $stmt->rowCount();
                if ($rowCount == 0) {
+                    // ADD ATTEMPT FOR UNKNOWN USER
+                    AddAttempt($email);
+
                     $this->errorMessage = 'user_does_not_exist';
                     return false;
                }

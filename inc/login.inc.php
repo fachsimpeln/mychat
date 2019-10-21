@@ -32,21 +32,21 @@
                $stmt->bindParam(':email', strval($email));
                $stmt->execute();
 
+               // GET USER INFORMATION FROM DATABASE
+               $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+               if (!$this->ValidateAttempt($email, $userInfo['usr_id'])) {
+                    $this->errorMessage = 'brute_force_protection_' . $this->attemptTime . '_min';
+                    return false;
+               }
+
                // CHECK IF USER EXISTS
                $rowCount = $stmt->rowCount();
                if ($rowCount == 0) {
                     // ADD ATTEMPT FOR UNKNOWN USER
-                    AddAttempt($email);
+                    $this->AddAttempt($email);
 
                     $this->errorMessage = 'user_does_not_exist';
-                    return false;
-               }
-
-               // GET USER INFORMATION FROM DATABASE
-               $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
-
-               if (!ValidateAttempt($email, $userInfo['usr_id'])) {
-                    $this->errorMessage = 'brute_force_protection_' . $this->attemptTime . '_min';
                     return false;
                }
 
@@ -54,11 +54,11 @@
                     $this->usrID = $userInfo['usr_id'];
                     $this->usrUsername = $userInfo['usr_username'];
 
-                    ResetAttempts($email, $this->usrID);
+                    $this->ResetAttempts($email, $this->usrID);
 
                     return true;
                }
-               AddAttempt($email, $userInfo['usr_id']);
+               $this->AddAttempt($email, $userInfo['usr_id']);
 
                $this->errorMessage = 'wrong_password';
                return false;
@@ -140,34 +140,46 @@
                if (isset($_COOKIE['mc_dc']) && $usrID != -1) {
                     // CHECK DEVICE COOKIE
                     $devicecookie = $_COOKIE['mc_dc'];
-                    if (ValidateDeviceCookie($usrID, $devicecookie)) {
-                         if (CheckDeviceCookie($usrID, $devicecookie)) {
+                    if ($this->ValidateDeviceCookie($usrID, $devicecookie)) {
+                         if ($this->CheckDeviceCookie($usrID, $devicecookie)) {
+                              //print 'checkdevicetrue';
                               return true;
                          } else {
+                              //print 'checkdevicefalse';
                               return false;
                          }
                     }
                }
-               if (CheckUnknownUser($user)) {
-                    return true;
+               // CHECK IF USER ALREADY IN DB
+               if ($this->ValidateUnkownUser($user)) {
+                    // CHECK IF LOCKED OR TOO MANY ATTEMPTS
+                    if ($this->CheckUnknownUser($user)) {
+                         //print 'checkunknowntrue';
+                         return true;
+                    } else {
+                         return false;
+                    }
                } else {
-                    return false;
+                    //print 'checkunknownfalse';
+                    return true;
                }
+               //print 'false';
                return false;
           }
 
           private function AddAttempt($user, $usrID = -1) {
                if (isset($_COOKIE['mc_dc']) && $usrID != -1) {
-                    AddDeviceAttempt($usrID, $user);
+                    $this->AddDeviceAttempt($usrID, $user);
+                    return;
                }
-               AddUnknownAttempt($user);
+               $this->AddUnknownAttempt($user);
           }
 
           private function AddDeviceAttempt($usrID, $user)
           {
                $devicecookie = $_COOKIE['mc_dc'];
 
-               if (ValidateDeviceCookie($usrID, $devicecookie)) {
+               if ($this->ValidateDeviceCookie($usrID, $devicecookie)) {
 
                     $stmt = $this->pdo->prepare("UPDATE `mc_devicecookies` SET `dc_attempts`=`dc_attempts`+1 WHERE `usr_id`=:usrid AND `dc_token`=:token");
 
@@ -182,7 +194,7 @@
 
                     return true;
                }
-               AddUnknownAttempt($user);
+               $this->AddUnknownAttempt($user);
                return false;
           }
 
@@ -209,7 +221,30 @@
                $stmt->execute();
           }
 
+          private function ValidateUnkownUser($user)
+          {
+               $stmt = $this->pdo->prepare("SELECT `fl_id` FROM `mc_loginsfailed` WHERE (`fl_user`=:user)");
+               $stmt->bindParam(':user', strval($user));
+               $stmt->execute();
+               // CHECK IF USER IS IN DB
+               $rowCount = $stmt->rowCount();
+               if ($rowCount == 0) {
+                    return false;
+               }
+               return true;
+          }
+
           private function CheckUnknownUser($user) {
+               $stmt = $this->pdo->prepare("SELECT `fl_id` FROM `mc_loginsfailed` WHERE (`fl_user`=:user AND (`fl_locked_until` IS NULL))");
+               $stmt->bindParam(':user', strval($user));
+               $stmt->execute();
+
+               // CHECK IF NOT LOCKED UNTIL
+               $rowCount = $stmt->rowCount();
+               if ($rowCount != 0) {
+                    return true;
+               }
+
                $stmt = $this->pdo->prepare("SELECT `fl_id` FROM `mc_loginsfailed` WHERE (`fl_user`=:user AND (`fl_locked_until` IS NULL OR `fl_locked_until` < CURRENT_TIMESTAMP))");
                $stmt->bindParam(':user', strval($user));
                $stmt->execute();
@@ -217,8 +252,11 @@
                // CHECK IF LOGIN EXISTS
                $rowCount = $stmt->rowCount();
                if ($rowCount == 0) {
+                    // ACCOUNT IS LOCKED
                     return false;
                }
+               // RESET ATTEMPTS
+               $this->ResetUnknownAttempts($user);
                return true;
           }
 
@@ -239,6 +277,17 @@
 
           private function CheckDeviceCookie($usrID, $devicecookie)
           {
+               $stmt = $this->pdo->prepare("SELECT `dc_id` FROM `mc_devicecookies` WHERE (`usr_id`=:usrid AND `dc_token`=:token AND (`dc_locked_until` IS NULL))");
+               $stmt->bindParam(':usrid', strval($usrID));
+               $stmt->bindParam(':token', strval($devicecookie));
+               $stmt->execute();
+
+               // CHECK IF NOT LOCKED UNTIL
+               $rowCount = $stmt->rowCount();
+               if ($rowCount != 0) {
+                    return true;
+               }
+
                $stmt = $this->pdo->prepare("SELECT `dc_id` FROM `mc_devicecookies` WHERE (`usr_id`=:usrid AND `dc_token`=:token AND (`dc_locked_until` IS NULL OR `dc_locked_until` < CURRENT_TIMESTAMP))");
                $stmt->bindParam(':usrid', strval($usrID));
                $stmt->bindParam(':token', strval($devicecookie));
@@ -249,20 +298,32 @@
                if ($rowCount == 0) {
                     return false;
                }
+               $this->ResetDeviceAttempts($usrID, $devicecookie);
                return true;
           }
 
           private function ResetAttempts($user, $usrID) {
                $devicecookie = $_COOKIE['mc_dc'];
-               if (ValidateDeviceCookie($usrID, $devicecookie)) {
-                    IssueNewDeviceCookie($usrID, true);
+               if ($this->ValidateDeviceCookie($usrID, $devicecookie)) {
+                    $this->IssueNewDeviceCookie($usrID, true);
                     return;
                }
+               $this->ResetUnknownAttempts($user);
+               $this->IssueNewDeviceCookie($usrID);
+          }
+
+          private function ResetUnknownAttempts($user) {
                $stmt = $this->pdo->prepare("UPDATE `mc_loginsfailed` SET `fl_attempts`=0, `fl_locked_until`=NULL WHERE `fl_user`=:user");
                $stmt->bindParam(':user', strval($user));
                $stmt->execute();
+          }
 
-               IssueNewDeviceCookie($usrID);
+          private function ResetDeviceAttempts($usrID, $devicecookie) {
+               $stmt = $this->pdo->prepare("UPDATE `mc_devicecookies` SET `dc_attempts`=0, `dc_locked_until`=NULL WHERE (`usr_id`=:usrid AND `dc_token`=:oldtoken)");
+
+               $stmt->bindParam(':oldtoken', strval($devicecookie));
+               $stmt->bindParam(':usrid', strval($usrID));
+               $stmt->execute();
           }
 
           private function IssueNewDeviceCookie($usrID, $withcookie = false)

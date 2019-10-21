@@ -127,12 +127,27 @@
 
           }
 
-          private function AddDeviceAttempt($usrID)
+          private function AddDeviceAttempt($usrID, $user)
           {
-               // BLOCK TIME SQL
-               // CURRENT_TIMESTAMP + INTERVAL '10' MINUTE
-
                $devicecookie = $_COOKIE['mc_dc'];
+
+               if (CheckDeviceCookie($usrID)) {
+
+                    $stmt = $this->pdo->prepare("UPDATE `mc_devicecookies` SET `dc_attempts`=`dc_attempts`+1 WHERE `usr_id`=:usrid AND `dc_token`=:token");
+
+                    $stmt->bindParam(':usrid', strval($usrID));
+                    $stmt->bindParam(':token', strval($devicecookie));
+                    $stmt->execute();
+
+                    // UPDATE LOCKED TIME
+                    $stmt = $this->pdo->prepare("UPDATE `mc_devicecookies` SET `dc_locked_until`=(CURRENT_TIMESTAMP + INTERVAL '" . $this->attemptTime . "' MINUTE) WHERE `dc_attempts` >= :max AND `dc_locked_until` IS NULL");
+                    $stmt->bindParam(':max', intval($this->maxAttempts));
+                    $stmt->execute();
+
+                    return true;
+               }
+               AddUnknownAttempt($user);
+               return false;
           }
 
           private function AddUnknownAttempt($user)

@@ -45,11 +45,20 @@
                // GET USER INFORMATION FROM DATABASE
                $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
+               if (!ValidateAttempt($email, $userInfo['usr_id'])) {
+                    die('brute-force-protection-' . $this->attemptTime . '-min');
+               }
+
                if (password_verify($password, $userInfo['usr_password'])) {
                     $this->usrID = $userInfo['usr_id'];
                     $this->usrUsername = $userInfo['usr_username'];
+
+                    ResetAttempts($email, $this->usrID);
+
                     return true;
                }
+               AddAttempt($email, $userInfo['usr_id']);
+
                $this->errorMessage = 'wrong_password';
                return false;
           }

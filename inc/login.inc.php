@@ -1,29 +1,48 @@
 <?php
      /**
-      * Login Handler
+      * LoginHandler
+      * Handles the login process via username, email, password and/or tfa
+      * Also handles the login via the session tokens
+      *
+      * @author fachsimpeln
+      * @category Login System
+      * @version login.system.db, v1.0, 2019-10-22
       */
      class LoginHandler
      {
           // USER INFO
-          public $usrID = null;
-          public $usrUsername = null;
+          public $usrID = null; // Internal DB User-ID
+          public $usrUsername = null; // User-Name of user
 
           // CONFIGURATION
-          private $maxAttempts = 5;
-          private $attemptTime = 10;
+          private $maxAttempts = 5; // brute-force protection after x tries
+          private $attemptTime = 10; // in minutes
 
           // ERROR MESSAGES
-          public $errorMessage = null;
+          public $errorMessage = null; // Error-Message after error
 
           // PDO VIA CONTRUCTOR
-          private $pdo = null;
+          private $pdo = null; // PDO object for db connection via constructor
 
+          /**
+          * Constructor
+          * Initialize LoginHandler object
+          *
+          * @param PDO $pdo PDO with active database connection
+          */
           public function __construct($pdo)
           {
                $this->pdo = $pdo;
           }
 
-          public function LoginUser($email, $password)
+          /**
+          * LoginUser
+          * User Login via username/email and password
+          *
+          * @param string $user Username / E-Mail of user
+          * @param string $password Password of user
+          * @return bool Login success (true -> successful)
+          */
           public function LoginUser($user, $password)
           {
                // STRIP WHITESPACE FROM BEGINNING AND END OF EMAIL
@@ -65,6 +84,14 @@
                return false;
           }
 
+          /**
+          * LoginToken
+          * User Login via session tokens
+          *
+          * @param string $loginIdentifier Random string for user identification in cookies ['mc_lid']
+          * @param string $loginToken Random string for user authorization in cookies ['mc_lto']
+          * @return bool Login success (true -> successful)
+          */
           public function LoginToken($loginIdentifier, $loginToken)
           {
 
@@ -111,12 +138,27 @@
                return false;
           }
 
+          /**
+          * SetToken
+          * Saves the session token in the browser cookies
+          *
+          * @param string $loginIdentifier Random string for user identification in cookies ['mc_lid']
+          * @param string $loginToken Random string for user authorization in cookies ['mc_lto']
+          * @param int $expires Cookie expiration as UNIX timestamp
+          */
           public function SetToken($loginIdentifier, $loginToken, $expires)
           {
                setcookie("mc_lid", $loginIdentifier, intval($expires));
                setcookie("mc_lto", $loginToken, intval($expires));
           }
 
+          /**
+          * SetToken
+          * Saves the session token in the browser cookies
+          *
+          * @param array $POSTParams POST-Parameters of request
+          * @return array LoginInfo with loginIdentifier and loginToken
+          */
           public function GetToken($POSTParams)
           {
                $loginInfo = array();
@@ -136,6 +178,14 @@
           // Brute-Force Protection
           // https://www.owasp.org/index.php/Slow_Down_Online_Guessing_Attacks_with_Device_Cookies
 
+          /**
+          * ValidateAttempt
+          * Validates a login attempt (checks for brute-force attack)
+          *
+          * @param string $user User/E-Mail of login request
+          * @param string $usrID Internal DB User-ID
+          * @return bool Valid attempt (true) or brute-force attack (false)
+          */
           private function ValidateAttempt($user, $usrID = -1)
           {
                if (isset($_COOKIE['mc_dc']) && $usrID != -1 && $usrID != null) {
@@ -163,6 +213,13 @@
                return false;
           }
 
+          /**
+          * AddAttempt
+          * Adds an failed attempt in the db
+          *
+          * @param string $user User/E-Mail of login request
+          * @param string $usrID Internal DB User-ID
+          */
           private function AddAttempt($user, $usrID = -1) {
                if (isset($_COOKIE['mc_dc']) && $usrID != -1) {
                     $this->AddDeviceAttempt($usrID, $user);
@@ -171,6 +228,15 @@
                $this->AddUnknownAttempt($user);
           }
 
+          /**
+          * AddDeviceAttempt
+          * Adds or increases an entry for the attempts in mc_devicecookies and locks all entries that are over $this->maxAttempts for $this->attemptTime minutes
+          * If device cookie is invalid, it adds an entry via AddUnknownAttempt()
+          *
+          * @param string $usrID Internal DB User-ID
+          * @param string $user User/E-Mail of login request
+          * @return bool (irrelevant) Device cookie was valid (true), Device cookie was invalid (false)
+          */
           private function AddDeviceAttempt($usrID, $user)
           {
                $devicecookie = $_COOKIE['mc_dc'];
@@ -194,6 +260,12 @@
                return false;
           }
 
+          /**
+          * AddUnknownAttempt
+          * Adds or increases an entry for the attempts in mc_loginsfailed and locks all entries that are over $this->maxAttempts for $this->attemptTime minutes
+          *
+          * @param string $user User/E-Mail of login request
+          */
           private function AddUnknownAttempt($user)
           {
                // CHECK IF ALREADY IN DB
@@ -217,6 +289,13 @@
                $stmt->execute();
           }
 
+          /**
+          * ValidateUnkownUser
+          * Checks if user is already in the mc_loginsfailed db
+          *
+          * @param string $user User/E-Mail of login request
+          * @return bool User exists (true) or User does not already exists (false)
+          */
           private function ValidateUnkownUser($user)
           {
                $stmt = $this->pdo->prepare("SELECT `fl_id` FROM `mc_loginsfailed` WHERE (`fl_user`=:user)");
@@ -230,6 +309,13 @@
                return true;
           }
 
+          /**
+          * CheckUnknownUser
+          * Checks if user is currently deactivated because of a brute-force attack
+          *
+          * @param string $user User/E-Mail of login request
+          * @return bool User is not locked [not in brute-force protection] (true) or user is locked (false)
+          */
           private function CheckUnknownUser($user) {
                $stmt = $this->pdo->prepare("SELECT `fl_id` FROM `mc_loginsfailed` WHERE (`fl_user`=:user AND (`fl_locked_until` IS NULL))");
                $stmt->bindParam(':user', strval($user));
@@ -256,6 +342,14 @@
                return true;
           }
 
+          /**
+          * ValidateDeviceCookie
+          * Checks if device cookie of browser belongs to user id
+          *
+          * @param string $usrID Internal DB User-ID
+          * @param string $devicecookie Device cookie supplied by user
+          * @return bool Valid cookie in combination with user (true) or invalid cookie (false)
+          */
           private function ValidateDeviceCookie($usrID, $devicecookie)
           {
                $stmt = $this->pdo->prepare("SELECT `dc_id` FROM `mc_devicecookies` WHERE (`usr_id`=:usrid AND `dc_token`=:token)");
@@ -271,6 +365,14 @@
                return true;
           }
 
+          /**
+          * CheckDeviceCookie
+          * Checks if Device Cookie is currently deactivated because of a brute-force attack
+          *
+          * @param string $usrID Internal DB User-ID
+          * @param string $devicecookie Device cookie supplied by user
+          * @return bool Device Cookie is not locked [not in brute-force protection] (true) or Device Cookie is locked (false)
+          */
           private function CheckDeviceCookie($usrID, $devicecookie)
           {
                $stmt = $this->pdo->prepare("SELECT `dc_id` FROM `mc_devicecookies` WHERE (`usr_id`=:usrid AND `dc_token`=:token AND (`dc_locked_until` IS NULL))");
@@ -298,6 +400,13 @@
                return true;
           }
 
+          /**
+          * ResetAttempts
+          * Resets all attempts after a valid login for usrID, devicecookie and username/email
+          *
+          * @param string $user User / E-Mail
+          * @param string $usrID Internal DB User-ID
+          */
           private function ResetAttempts($user, $usrID) {
                $devicecookie = $_COOKIE['mc_dc'];
                if ($this->ValidateDeviceCookie($usrID, $devicecookie)) {
@@ -308,12 +417,25 @@
                $this->IssueNewDeviceCookie($usrID);
           }
 
+          /**
+          * ResetUnknownAttempts
+          * Resets db mc_loginsfailed at username/email
+          *
+          * @param string $user User / E-Mail
+          */
           private function ResetUnknownAttempts($user) {
                $stmt = $this->pdo->prepare("UPDATE `mc_loginsfailed` SET `fl_attempts`=0, `fl_locked_until`=NULL WHERE `fl_user`=:user");
                $stmt->bindParam(':user', strval($user));
                $stmt->execute();
           }
 
+          /**
+          * ResetDeviceAttempts
+          * Resets the attempts made from a specific device cookie
+          *
+          * @param string $usrID Internal DB User-ID
+          * @param string $devicecookie Device cookie supplied by user
+          */
           private function ResetDeviceAttempts($usrID, $devicecookie) {
                $stmt = $this->pdo->prepare("UPDATE `mc_devicecookies` SET `dc_attempts`=0, `dc_locked_until`=NULL WHERE (`usr_id`=:usrid AND `dc_token`=:oldtoken)");
 
@@ -322,6 +444,13 @@
                $stmt->execute();
           }
 
+          /**
+          * IssueNewDeviceCookie
+          * Issues a new device cookie (64bit) for a specific usrID and sets the cookie to the users browser
+          *
+          * @param string $usrID Internal DB User-ID
+          * @param string $withcookie If set to true, the db will be updated instead of a new entry, because user logged in with cookie
+          */
           private function IssueNewDeviceCookie($usrID, $withcookie = false)
           {
                // GENERATE NEW DEVICE COOKIE

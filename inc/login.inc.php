@@ -142,10 +142,8 @@
                     $devicecookie = $_COOKIE['mc_dc'];
                     if ($this->ValidateDeviceCookie($usrID, $devicecookie)) {
                          if ($this->CheckDeviceCookie($usrID, $devicecookie)) {
-                              //print 'checkdevicetrue';
                               return true;
                          } else {
-                              //print 'checkdevicefalse';
                               return false;
                          }
                     }
@@ -154,16 +152,13 @@
                if ($this->ValidateUnkownUser($user)) {
                     // CHECK IF LOCKED OR TOO MANY ATTEMPTS
                     if ($this->CheckUnknownUser($user)) {
-                         //print 'checkunknowntrue';
                          return true;
                     } else {
                          return false;
                     }
                } else {
-                    //print 'checkunknownfalse';
                     return true;
                }
-               //print 'false';
                return false;
           }
 

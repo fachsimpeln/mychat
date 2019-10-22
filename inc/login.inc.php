@@ -24,18 +24,19 @@
           }
 
           public function LoginUser($email, $password)
+          public function LoginUser($user, $password)
           {
                // STRIP WHITESPACE FROM BEGINNING AND END OF EMAIL
-               $email = trim($email);
+               $user = trim($user);
 
-               $stmt = $this->pdo->prepare("SELECT `usr_id`, `usr_username`, `usr_password` FROM `mc_users` WHERE `usr_email`=:email");
-               $stmt->bindParam(':email', strval($email));
+               $stmt = $this->pdo->prepare("SELECT `usr_id`, `usr_username`, `usr_password` FROM `mc_users` WHERE (`usr_email`=:user OR `usr_username`=:user)");
+               $stmt->bindParam(':user', strval($user));
                $stmt->execute();
 
                // GET USER INFORMATION FROM DATABASE
                $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
-               if (!$this->ValidateAttempt($email, $userInfo['usr_id'])) {
+               if (!$this->ValidateAttempt($user, $userInfo['usr_id'])) {
                     $this->errorMessage = 'brute_force_protection_' . $this->attemptTime . '_min';
                     return false;
                }
@@ -44,7 +45,7 @@
                $rowCount = $stmt->rowCount();
                if ($rowCount == 0) {
                     // ADD ATTEMPT FOR UNKNOWN USER
-                    $this->AddAttempt($email);
+                    $this->AddAttempt($user);
 
                     $this->errorMessage = 'user_does_not_exist';
                     return false;
@@ -54,11 +55,11 @@
                     $this->usrID = $userInfo['usr_id'];
                     $this->usrUsername = $userInfo['usr_username'];
 
-                    $this->ResetAttempts($email, $this->usrID);
+                    $this->ResetAttempts($user, $this->usrID);
 
                     return true;
                }
-               $this->AddAttempt($email, $userInfo['usr_id']);
+               $this->AddAttempt($user, $userInfo['usr_id']);
 
                $this->errorMessage = 'wrong_password';
                return false;

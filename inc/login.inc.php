@@ -343,7 +343,7 @@
 
                // SET COOKIE TO USERS BROWSER
                $expires = time();
-               $expires += 24 * 60 * 60 * 182; // 24h * 182 = 182 Days = half year
+               $expires += 24 * 60 * 60 * 30 * 6; // 24h * 30d * 6 = 6 months
                setcookie("mc_dc", $devicecookie, intval($expires));
           }
 

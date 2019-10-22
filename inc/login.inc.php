@@ -138,7 +138,7 @@
 
           private function ValidateAttempt($user, $usrID = -1)
           {
-               if (isset($_COOKIE['mc_dc']) && $usrID != -1) {
+               if (isset($_COOKIE['mc_dc']) && $usrID != -1 && $usrID != null) {
                     // CHECK DEVICE COOKIE
                     $devicecookie = $_COOKIE['mc_dc'];
                     if ($this->ValidateDeviceCookie($usrID, $devicecookie)) {

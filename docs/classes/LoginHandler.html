@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">25</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1827152158"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1827152158" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/DatabaseConnection.html">DatabaseConnection</a></li>
+                                                    <li class="class"><a href="../classes/LoginHandler.html">LoginHandler</a></li>
+                                                    <li class="class"><a href="../classes/PermissionHandler.html">PermissionHandler</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/default.html">\</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\</small>LoginHandler</h1>
+                    <p><em>LoginHandler
+Handles the login process via username, email, password and/or tfa
+Also handles the login via the session tokens</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/LoginHandler.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_LoginUser" class="">LoginUser()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_LoginToken" class="">LoginToken()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_SetToken" class="">SetToken()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_GetToken" class="">GetToken()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/LoginHandler.html#property_usrID" class="">$usrID</a><br />
+                                                                    <a href="../classes/LoginHandler.html#property_usrUsername" class="">$usrUsername</a><br />
+                                                                    <a href="../classes/LoginHandler.html#property_errorMessage" class="">$errorMessage</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <a href="../classes/LoginHandler.html#method_ValidateAttempt" class="">ValidateAttempt()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_AddAttempt" class="">AddAttempt()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_AddDeviceAttempt" class="">AddDeviceAttempt()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_AddUnknownAttempt" class="">AddUnknownAttempt()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_ValidateUnkownUser" class="">ValidateUnkownUser()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_CheckUnknownUser" class="">CheckUnknownUser()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_ValidateDeviceCookie" class="">ValidateDeviceCookie()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_CheckDeviceCookie" class="">CheckDeviceCookie()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_ResetAttempts" class="">ResetAttempts()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_ResetUnknownAttempts" class="">ResetUnknownAttempts()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_ResetDeviceAttempts" class="">ResetDeviceAttempts()</a><br />
+                                                                    <a href="../classes/LoginHandler.html#method_IssueNewDeviceCookie" class="">IssueNewDeviceCookie()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/LoginHandler.html#property_maxAttempts" class="">$maxAttempts</a><br />
+                                                                    <a href="../classes/LoginHandler.html#property_attemptTime" class="">$attemptTime</a><br />
+                                                                    <a href="../classes/LoginHandler.html#property_pdo" class="">$pdo</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/inc.login.inc.html"><div class="path-wrapper">inc\login.inc.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\LoginHandler</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>fachsimpeln</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                category
+                            </th>
+                            <td>
+                                                                    <p>Login System</p>
+                                                            </td>
+                        </tr>
+                                            <tr>
+                            <th>
+                                version
+                            </th>
+                            <td>
+                                                                    <p>login.system.db, v1.0, 2019-10-22</p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_usrID" name="property_usrID" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$usrID</h3>
+                <pre class="signature">$usrID : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_usrUsername" name="property_usrUsername" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$usrUsername</h3>
+                <pre class="signature">$usrUsername : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_errorMessage" name="property_errorMessage" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$errorMessage</h3>
+                <pre class="signature">$errorMessage : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_maxAttempts" name="property_maxAttempts" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$maxAttempts</h3>
+                <pre class="signature">$maxAttempts : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_attemptTime" name="property_attemptTime" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$attemptTime</h3>
+                <pre class="signature">$attemptTime : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_pdo" name="property_pdo" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$pdo</h3>
+                <pre class="signature">$pdo : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\PDO  <span class="argument">$pdo</span>) </pre>
+                <p><em>Constructor
+Initialize LoginHandler object</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\PDO</td>
+                                <td>$pdo </td>
+                                <td><p>PDO with active database connection</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoginUser" name="method_LoginUser" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoginUser()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoginUser(string  <span class="argument">$user</span>, string  <span class="argument">$password</span>) : boolean</pre>
+                <p><em>LoginUser
+User Login via username/email and password</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>Username / E-Mail of user</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$password </td>
+                                <td><p>Password of user</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Login success (true -&gt; successful)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoginToken" name="method_LoginToken" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoginToken()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoginToken(string  <span class="argument">$loginIdentifier</span>, string  <span class="argument">$loginToken</span>) : boolean</pre>
+                <p><em>LoginToken
+User Login via session tokens</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$loginIdentifier </td>
+                                <td><p>Random string for user identification in cookies ['mc_lid']</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$loginToken </td>
+                                <td><p>Random string for user authorization in cookies ['mc_lto']</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Login success (true -&gt; successful)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_SetToken" name="method_SetToken" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">SetToken()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">SetToken(string  <span class="argument">$loginIdentifier</span>, string  <span class="argument">$loginToken</span>, integer  <span class="argument">$expires</span>) </pre>
+                <p><em>SetToken
+Saves the session token in the browser cookies</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$loginIdentifier </td>
+                                <td><p>Random string for user identification in cookies ['mc_lid']</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$loginToken </td>
+                                <td><p>Random string for user authorization in cookies ['mc_lto']</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$expires </td>
+                                <td><p>Cookie expiration as UNIX timestamp</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_GetToken" name="method_GetToken" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">GetToken()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">GetToken(array  <span class="argument">$POSTParams</span>) : array</pre>
+                <p><em>SetToken
+Saves the session token in the browser cookies</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$POSTParams </td>
+                                <td><p>POST-Parameters of request</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>LoginInfo with loginIdentifier and loginToken</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ValidateAttempt" name="method_ValidateAttempt" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">ValidateAttempt()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ValidateAttempt(string  <span class="argument">$user</span>, string  <span class="argument">$usrID = -1</span>) : boolean</pre>
+                <p><em>ValidateAttempt
+Validates a login attempt (checks for brute-force attack)</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>User/E-Mail of login request</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$usrID </td>
+                                <td><p>Internal DB User-ID</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Valid attempt (true) or brute-force attack (false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_AddAttempt" name="method_AddAttempt" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">AddAttempt()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">AddAttempt(string  <span class="argument">$user</span>, string  <span class="argument">$usrID = -1</span>) </pre>
+                <p><em>AddAttempt
+Adds an failed attempt in the db</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>User/E-Mail of login request</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$usrID </td>
+                                <td><p>Internal DB User-ID</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_AddDeviceAttempt" name="method_AddDeviceAttempt" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">AddDeviceAttempt()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">AddDeviceAttempt(string  <span class="argument">$usrID</span>, string  <span class="argument">$user</span>) : boolean</pre>
+                <p><em>AddDeviceAttempt
+Adds or increases an entry for the attempts in mc_devicecookies and locks all entries that are over $this-&gt;maxAttempts for $this-&gt;attemptTime minutes
+If device cookie is invalid, it adds an entry via AddUnknownAttempt()</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$usrID </td>
+                                <td><p>Internal DB User-ID</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>User/E-Mail of login request</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>(irrelevant) Device cookie was valid (true), Device cookie was invalid (false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_AddUnknownAttempt" name="method_AddUnknownAttempt" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">AddUnknownAttempt()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">AddUnknownAttempt(string  <span class="argument">$user</span>) </pre>
+                <p><em>AddUnknownAttempt
+Adds or increases an entry for the attempts in mc_loginsfailed and locks all entries that are over $this-&gt;maxAttempts for $this-&gt;attemptTime minutes</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>User/E-Mail of login request</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ValidateUnkownUser" name="method_ValidateUnkownUser" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">ValidateUnkownUser()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ValidateUnkownUser(string  <span class="argument">$user</span>) : boolean</pre>
+                <p><em>ValidateUnkownUser
+Checks if user is already in the mc_loginsfailed db</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>User/E-Mail of login request</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>User exists (true) or User does not already exists (false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_CheckUnknownUser" name="method_CheckUnknownUser" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">CheckUnknownUser()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">CheckUnknownUser(string  <span class="argument">$user</span>) : boolean</pre>
+                <p><em>CheckUnknownUser
+Checks if user is currently deactivated because of a brute-force attack</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>User/E-Mail of login request</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>User is not locked [not in brute-force protection] (true) or user is locked (false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ValidateDeviceCookie" name="method_ValidateDeviceCookie" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">ValidateDeviceCookie()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ValidateDeviceCookie(string  <span class="argument">$usrID</span>, string  <span class="argument">$devicecookie</span>) : boolean</pre>
+                <p><em>ValidateDeviceCookie
+Checks if device cookie of browser belongs to user id</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$usrID </td>
+                                <td><p>Internal DB User-ID</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$devicecookie </td>
+                                <td><p>Device cookie supplied by user</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Valid cookie in combination with user (true) or invalid cookie (false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_CheckDeviceCookie" name="method_CheckDeviceCookie" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">CheckDeviceCookie()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">CheckDeviceCookie(string  <span class="argument">$usrID</span>, string  <span class="argument">$devicecookie</span>) : boolean</pre>
+                <p><em>CheckDeviceCookie
+Checks if Device Cookie is currently deactivated because of a brute-force attack</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$usrID </td>
+                                <td><p>Internal DB User-ID</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$devicecookie </td>
+                                <td><p>Device cookie supplied by user</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Device Cookie is not locked [not in brute-force protection] (true) or Device Cookie is locked (false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ResetAttempts" name="method_ResetAttempts" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">ResetAttempts()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ResetAttempts(string  <span class="argument">$user</span>, string  <span class="argument">$usrID</span>) </pre>
+                <p><em>ResetAttempts
+Resets all attempts after a valid login for usrID, devicecookie and username/email</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>User / E-Mail</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$usrID </td>
+                                <td><p>Internal DB User-ID</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ResetUnknownAttempts" name="method_ResetUnknownAttempts" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">ResetUnknownAttempts()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ResetUnknownAttempts(string  <span class="argument">$user</span>) </pre>
+                <p><em>ResetUnknownAttempts
+Resets db mc_loginsfailed at username/email</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>User / E-Mail</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ResetDeviceAttempts" name="method_ResetDeviceAttempts" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">ResetDeviceAttempts()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ResetDeviceAttempts(string  <span class="argument">$usrID</span>, string  <span class="argument">$devicecookie</span>) </pre>
+                <p><em>ResetDeviceAttempts
+Resets the attempts made from a specific device cookie</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$usrID </td>
+                                <td><p>Internal DB User-ID</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$devicecookie </td>
+                                <td><p>Device cookie supplied by user</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_IssueNewDeviceCookie" name="method_IssueNewDeviceCookie" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">IssueNewDeviceCookie()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">IssueNewDeviceCookie(string  <span class="argument">$usrID</span>, string  <span class="argument">$withcookie = false</span>) </pre>
+                <p><em>IssueNewDeviceCookie
+Issues a new device cookie (64bit) for a specific usrID and sets the cookie to the users browser</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$usrID </td>
+                                <td><p>Internal DB User-ID</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$withcookie </td>
+                                <td><p>If set to true, the db will be updated instead of a new entry, because user logged in with cookie</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">login.inc.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/inc\login.inc.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on October 23rd, 2019 at 16:31.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

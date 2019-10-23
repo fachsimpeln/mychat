@@ -1,0 +1,38 @@
+<?php
+
+     if (isset($_POST['submit'])) {
+          // Decrypt
+     }
+
+?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+     <head>
+          <meta charset="utf-8">
+          <title>mychat - login</title>
+
+          <!-- Include favicon -->
+          <link rel="icon" type="image/svg+xml" href="./img/mychat_logo.svg" sizes="any">
+
+          <script type="text/javascript">
+               function encryptForm() {
+
+               }
+          </script>
+     </head>
+     <body>
+          <h1>mychat</h1>
+          <p>Login</p>
+
+          <form class="mychat-form-login" onsubmit="return encryptForm()" action="" method="post">
+               <input type="text" name="dec-user" value="">
+               <input type="text" name="dec-pwd" value="">
+
+               <input type="hidden" name="enc-user" value="">
+               <input type="hidden" name="enc-pwd" value="">
+
+               <input type="submit" name="submit" value="">
+          </form>
+     </body>
+</html>
+

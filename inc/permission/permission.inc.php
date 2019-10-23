@@ -27,7 +27,7 @@
           }
 
           /**
-          * LoginUser
+          * GetChatPermission
           * Checks if two users are allowed to communicate (are friends)
           *
           * @param string $usrID Internal db user id of sender

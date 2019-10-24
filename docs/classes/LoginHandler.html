@@ -106,7 +106,7 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">25</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">16</span>
                                 </a>
                             </li>
                             <li>
@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1827152158"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-206642219"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1827152158" class="accordion-body collapse in">
+            <div id="namespace-206642219" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -300,13 +300,13 @@ Also handles the login via the session tokens</em></p>
             <a id="property_usrID" name="property_usrID" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$usrID</h3>
-                <pre class="signature">$usrID : </pre>
+                <pre class="signature">$usrID : integer|null</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer|null
+                &mdash; Internal DB User-ID                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -324,13 +324,13 @@ Also handles the login via the session tokens</em></p>
             <a id="property_usrUsername" name="property_usrUsername" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$usrUsername</h3>
-                <pre class="signature">$usrUsername : </pre>
+                <pre class="signature">$usrUsername : string|null</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string|null
+                &mdash; User-Name of user                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -348,13 +348,13 @@ Also handles the login via the session tokens</em></p>
             <a id="property_errorMessage" name="property_errorMessage" class="anchor"></a>
             <article class="property">
                 <h3 class="public ">$errorMessage</h3>
-                <pre class="signature">$errorMessage : </pre>
+                <pre class="signature">$errorMessage : string|null</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                string|null
+                &mdash; Error-Message after error                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -372,13 +372,13 @@ Also handles the login via the session tokens</em></p>
             <a id="property_maxAttempts" name="property_maxAttempts" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$maxAttempts</h3>
-                <pre class="signature">$maxAttempts : </pre>
+                <pre class="signature">$maxAttempts : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; brute-force protection after x tries                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -396,13 +396,13 @@ Also handles the login via the session tokens</em></p>
             <a id="property_attemptTime" name="property_attemptTime" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$attemptTime</h3>
-                <pre class="signature">$attemptTime : </pre>
+                <pre class="signature">$attemptTime : integer</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                integer
+                &mdash; time to lock account for in minutes                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -420,13 +420,13 @@ Also handles the login via the session tokens</em></p>
             <a id="property_pdo" name="property_pdo" class="anchor"></a>
             <article class="property">
                 <h3 class="private ">$pdo</h3>
-                <pre class="signature">$pdo : </pre>
+                <pre class="signature">$pdo : \PDO|null</pre>
                 <p><em></em></p>
                 
 
                                 <h4>Type</h4>
-                
-                                            </article>
+                \PDO|null
+                &mdash; PDO object for db connection via constructor                            </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
@@ -1178,7 +1178,7 @@ Issues a new device cookie (64bit) for a specific usrID and sets the cookie to t
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on October 23rd, 2019 at 16:31.
+                    on October 24th, 2019 at 16:05.
                 </section>
             </section>
         </section>

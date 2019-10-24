@@ -10,19 +10,26 @@
       */
      class LoginHandler
      {
-          // USER INFO
-          public $usrID = null; // Internal DB User-ID
-          public $usrUsername = null; // User-Name of user
+          /** @var int|null Internal DB User-ID */
+          public $usrID = null;
+
+          /** @var string|null  User-Name of user */
+          public $usrUsername = null;
 
           // CONFIGURATION
-          private $maxAttempts = 5; // brute-force protection after x tries
+          /** @var int brute-force protection after x tries */
+          private $maxAttempts = 5;
+
+          /** @var int time to lock account for in minutes */
           private $attemptTime = 10; // in minutes
 
           // ERROR MESSAGES
-          public $errorMessage = null; // Error-Message after error
+          /** @var string|null Error-Message after error */
+          public $errorMessage = null;
 
           // PDO VIA CONTRUCTOR
-          private $pdo = null; // PDO object for db connection via constructor
+          /** @var PDO|null PDO object for db connection via constructor */
+          private $pdo = null;
 
           /**
           * Constructor

@@ -10,10 +10,11 @@
       */
      class PermissionHandler
      {
+          /** @var PDO|null PDO object for db connection via constructor */
+          private $pdo = null;
 
-          private $pdo = null; // PDO object for db connection via constructor
-
-          public $errorMessage = null; // Error-Message after error
+          /** @var string|null Error-Message after error */
+          public $errorMessage = null;
 
           /**
           * Constructor

@@ -1,10 +1,19 @@
 <?php
      /**
       * DatabaseConnection
-      * created 2019-10-08
+      *
+      * @author fachsimpeln
+      * @category Database System
+      * @version database.system.db, v1.0, 2019-10-22
       */
      class DatabaseConnection
      {
+          /**
+          * connect
+          * Connects to the database server
+          *
+          * @return PDO Pdo object with the active connection
+          */
           public static function connect()
           {
                // DEFINE PARAMETERS

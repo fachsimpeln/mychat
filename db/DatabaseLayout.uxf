@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>688</x>
+      <y>344</y>
+      <w>224</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>mc_users
+--
+usr_id : int                                             &lt;pk&gt;
+usr_username : varchar(200)         &lt;unique&gt;
+usr_email : varchar(200)                &lt;unique&gt;
+usr_password : text
+usr_createdAt : datetime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1072</x>
+      <y>344</y>
+      <w>224</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>mc_logins
+--
+login_id : int                                           &lt;pk&gt;
+login_userIdentifier : text                &lt;unique&gt;
+login_token : text
+login_expires : text
+usr_id : int                                              &lt;fk&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>904</x>
+      <y>384</y>
+      <w>184</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>m1=[1;1]
+m2=[0;n]
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;210.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>688</x>
+      <y>536</y>
+      <w>224</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>mc_friendist
+--
+fr_id : int                                               &lt;pk&gt;
+usr_id1 : int                                           &lt;fk&gt;
+usr_id2 : int                                           &lt;fk&gt;
+fr_accepted : int                              	       (0)
+fr_since : timestamp</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>792</x>
+      <y>424</y>
+      <w>48</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>m1=[2;2]
+m2=[0;n]
+
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>120</x>
+      <y>344</y>
+      <w>224</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>mc_groups
+--
+group_id : int                                         &lt;pk&gt;
+group_name : text
+group_privacy : text
+group_createdAt : datetime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>448</x>
+      <y>344</y>
+      <w>136</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>mc_group_user
+--
+gu_id : int                  &lt;pk&gt;
+usr_id : int                  &lt;fk&gt;
+group_id : int              &lt;fk&gt;
+gu_admin : int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>384</y>
+      <w>128</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>m1=[0;n]
+m2=[1;1]
+
+lt=&lt;-</panel_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>576</x>
+      <y>368</y>
+      <w>128</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>m1=[1;1]
+m2=[0;n]
+
+lt=-&gt;</panel_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>488</x>
+      <y>144</y>
+      <w>224</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>mc_loginfailed
+--
+fl_id : int                                               &lt;pk&gt;
+fl_user : varchar(200)                    &lt;unique&gt;
+fl_attempts : int
+fl_locked_until : timestamp</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>768</x>
+      <y>144</y>
+      <w>232</w>
+      <h>88</h>
+    </coordinates>
+    <panel_attributes>mc_devicecookies
+--
+dc_id : int                                                &lt;pk&gt;
+dc_token : text
+dc_attempts : int
+dc_locked_until : timestamp
+usr_id : int                                               &lt;fk&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>864</x>
+      <y>224</y>
+      <w>48</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>m1=[1;1]
+m2=[0;n]
+lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;150.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>448</x>
+      <y>112</y>
+      <w>624</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Brute-Force Protection
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>40</x>
+      <y>312</y>
+      <w>624</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Group Management
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>992</x>
+      <y>312</y>
+      <w>376</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Session Login Table
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>624</x>
+      <y>504</y>
+      <w>376</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>Friendlist (Permissions)
+bg=white</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

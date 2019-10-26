@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-798539010"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-729792201"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-798539010" class="accordion-body collapse in">
+            <div id="namespace-729792201" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -165,8 +165,9 @@
                                             </nav>
                     <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
 
-                    <h1><small>\</small>DatabaseConnection</h1>
-                    <p><em>DatabaseConnection</em></p>
+                    <h1><small>\</small>MessageHandler</h1>
+                    <p><em>MessageHandler
+Prepares messages ready to be send</em></p>
                     
                     
                                         
@@ -185,10 +186,14 @@
                         </section>
                         <section class="row-fluid public">
                             <section class="span4">
-                                                                    <a href="../classes/DatabaseConnection.html#method_connect" class="">connect()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_GetUserID" class="">GetUserID()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_PrepareTextMessage" class="">PrepareTextMessage()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_GetFileName" class="">GetFileName()</a><br />
                                                             </section>
                             <section class="span4">
-                                                                    <em>No public properties found</em>
+                                                                    <a href="../classes/MessageHandler.html#property_errorMessage" class="">$errorMessage</a><br />
+                                                                    <a href="../classes/MessageHandler.html#property_message" class="">$message</a><br />
                                                             </section>
                             <section class="span4">
                                                                     <em>No constants found</em>
@@ -207,10 +212,11 @@
                         </section>
                         <section class="row-fluid private">
                             <section class="span4">
-                                                                    <em>No private methods found</em>
+                                                                    <a href="../classes/MessageHandler.html#method_ValidateTextMessage" class="">ValidateTextMessage()</a><br />
                                                             </section>
                             <section class="span4">
-                                                                    <em>No private properties found</em>
+                                                                    <a href="../classes/MessageHandler.html#property_messageLength" class="">$messageLength</a><br />
+                                                                    <a href="../classes/MessageHandler.html#property_pdo" class="">$pdo</a><br />
                                                             </section>
                             <section class="span4">
                                 <em>N/A</em>
@@ -223,12 +229,12 @@
                     
                     <dl>
                         <dt>File</dt>
-                            <dd><a href="../files/inc.db.inc.html"><div class="path-wrapper">inc\db.inc.php</div></a></dd>
+                            <dd><a href="../files/inc.messages.messages.inc.html"><div class="path-wrapper">inc\messages\messages.inc.php</div></a></dd>
                                                 <dt>Package</dt>
                             <dd><div class="namespace-wrapper">Default</div></dd>
                                                 <dt>Class hierarchy</dt>
                             <dd class="hierarchy">
-                                                                                                                                                                    <div class="namespace-wrapper">\DatabaseConnection</div>
+                                                                                                                                                                    <div class="namespace-wrapper">\MessageHandler</div>
                             </dd>
 
                         
@@ -251,7 +257,7 @@
                                 category
                             </th>
                             <td>
-                                                                    <p>Database System</p>
+                                                                    <p>Messages</p>
                                                             </td>
                         </tr>
                                             <tr>
@@ -259,7 +265,7 @@
                                 version
                             </th>
                             <td>
-                                                                    <p>database.system.db, v1.0, 2019-10-22</p>
+                                                                    <p>message.system.db, v1.0, 2019-10-26</p>
                                                             </td>
                         </tr>
                                         </table>
@@ -267,7 +273,111 @@
             </div>
 
                         
-                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_errorMessage" name="property_errorMessage" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$errorMessage</h3>
+                <pre class="signature">$errorMessage : string|null</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                string|null
+                &mdash; Error-Message after error                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_message" name="property_message" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$message</h3>
+                <pre class="signature">$message : array|null</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array|null
+                &mdash; Prepared Message as array                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_messageLength" name="property_messageLength" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$messageLength</h3>
+                <pre class="signature">$messageLength : integer</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                integer
+                &mdash; Max Message Length                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_pdo" name="property_pdo" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$pdo</h3>
+                <pre class="signature">$pdo : \PDO|null</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                \PDO|null
+                &mdash; PDO object for db connection via constructor                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
                                     <a id="methods" name="methods"></a>
             <div class="row-fluid">
                 <div class="span8 content class"><h2>Methods</h2></div>
@@ -276,26 +386,30 @@
 
                                     <div class="row-fluid">
         <div class="span8 content class">
-            <a id="method_connect" name="method_connect" class="anchor"></a>
+            <a id="method___construct" name="method___construct" class="anchor"></a>
             <article class="method">
-                <h3 class="public ">connect()</h3>
+                <h3 class="public ">__construct()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">connect() : \PDO</pre>
-                <p><em>connect
-Connects to the database server</em></p>
+                <pre class="signature" style="margin-right: 54px;">__construct(\PDO  <span class="argument">$pdo</span>) </pre>
+                <p><em>Constructor
+Initialize LoginHandler object</em></p>
                 
 
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\PDO</td>
+                                <td>$pdo </td>
+                                <td><p>PDO with active database connection</p></td>
+                            </tr>
+                                            </table>
                 
                 
-                                    <h4>Returns</h4>
-                    \PDO
-                                            &mdash; <p>Pdo object with the active connection</p>
-                                    				
+                				
                             </article>
         </div>
         <aside class="span4 detailsbar">
             <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
                                                             <dl>
                                                                             </dl>
             <h2>Tags</h2>
@@ -305,16 +419,183 @@ Connects to the database server</em></p>
         </aside>
     </div>
 
-                                                                    </div>
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_GetUserID" name="method_GetUserID" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">GetUserID()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">GetUserID(string  <span class="argument">$user</span>) : integer</pre>
+                <p><em>GetUserID
+Finds usrID based on e-mail or username</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$user </td>
+                                <td><p>E-Mail or username of user</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    integer
+                                            &mdash; <p>Internal db user id or on error -1</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_PrepareTextMessage" name="method_PrepareTextMessage" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">PrepareTextMessage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">PrepareTextMessage(integer  <span class="argument">$senderID</span>, integer  <span class="argument">$receiverID</span>, string  <span class="argument">$text</span>) : boolean</pre>
+                <p><em>PrepareTextMessage
+Prepares message to be send to receiver</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$senderID </td>
+                                <td><p>Internal db user id of sender</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$receiverID </td>
+                                <td><p>Internal db user id of receiver</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$text </td>
+                                <td><p>Message text to be send</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Prepared message saved in attribute $this-&gt;message (true) or invalid message (false)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_GetFileName" name="method_GetFileName" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">GetFileName()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">GetFileName(integer  <span class="argument">$senderID</span>, integer  <span class="argument">$receiverID</span>) : string</pre>
+                <p><em>GetFileName
+Gets filename for message in conversation between $senderID and $receiverID</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$senderID </td>
+                                <td><p>Internal db user id of sender</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$receiverID </td>
+                                <td><p>Internal db user id of receiver</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Filename for message 1.2/2019-10-26.json</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ValidateTextMessage" name="method_ValidateTextMessage" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">ValidateTextMessage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ValidateTextMessage(array  <span class="argument">$message</span>) : boolean</pre>
+                <p><em>ValidateTextMessage
+Validates prepared text message by PrepareTextMessage()</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$message </td>
+                                <td><p>Prepared message as array</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Valid message (true) or invalid message (false, error in $this-&gt;errorMessage)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
     </section>
 
     <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="source-view-label">db.inc.php</h3>
+            <h3 id="source-view-label">messages.inc.php</h3>
         </div>
         <div class="modal-body">
-            <pre data-src="../files/inc\db.inc.php.txt" class="language-php line-numbers"></pre>
+            <pre data-src="../files/inc\messages\messages.inc.php.txt" class="language-php line-numbers"></pre>
         </div>
     </div>
 

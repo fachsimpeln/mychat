@@ -3,14 +3,9 @@
      // INITIALIZE
      require '../../inc/db.inc.php';
      require '../../inc/login.inc.php';
+     require '../../inc/messages/messages.inc.php';
      require '../../inc/security/xss.inc.php';
      $pdo = DatabaseConnection::connect();
-
-     // CHECK MESSAGE LENGTH
-     $message = $_REQUEST['message'];
-     if (strlen($message) > 120) {
-          die('message_too_long');
-     }
 
      // CHECK USER AUTH
      $loginHandler = new LoginHandler($pdo);
@@ -35,7 +30,20 @@
                // NO PERMISSION
                die('no_permission');
           }
-          // SEND MESSAGE
+          $text = $_REQUEST['message'];
+
+          $messages = new MessageHandler($pdo);
+          $receiverID = $messages->GetUserID($receiverUsername);
+          if (!$messages->PrepareTextMessage($usrID, $receiverID, $text)) {
+               // INVALID MESSAGE
+               die($messages->errorMessage);
+          }
+
+          $conversationFilename = '../messages/conversation/' . $messages->GetFileName($usrID, $receiverID);
+
+          $unreadFilename = '../messages/user/' . $receiverID . '/unread.json';
+
+
 
      }
 

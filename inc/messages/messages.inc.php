@@ -71,8 +71,6 @@
           * @return bool Prepared message saved in attribute $this->message (true) or invalid message (false)
           */
           public function PrepareTextMessage($senderID, $receiverID, $text) {
-               date_default_timezone_set('Europe/Berlin');
-
                $message = array();
                $message['sender'] = $senderID;
                $message['receiver'] = $receiverID;
@@ -105,6 +103,26 @@
                     return false;
                }
                return true;
+          }
+
+          /**
+          * GetFileName
+          * Gets filename for message in conversation between $senderID and $receiverID
+          *
+          * @param int $senderID Internal db user id of sender
+          * @param int $receiverID Internal db user id of receiver
+          * @return string Filename for message 1.2/2019-10-26.json
+          */
+          public function GetFileName($senderID, $receiverID) {
+               $filename = '';
+               if (intval($senderID) < intval($receiverID)) {
+                    $filename .= $senderID . '.' . $receiverID;
+               } else {
+                    $filename .= $receiverID . '.' . $senderID;
+               }
+               $date = date('Y-m-d', time());
+               $filename .= '/' . $date . '.json';
+               return $filename;
           }
 
      }

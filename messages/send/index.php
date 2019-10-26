@@ -63,7 +63,7 @@
      * @param string $message Text to be appended
      */
      function WriteMessageToFile($path, $message) {
-          if (!file_exists($path)) {
+          if (!file_exists(dirname($path))) {
                mkdir(dirname($path), 0777, true);
           }
 
@@ -88,7 +88,7 @@
      * @param string $message Text to be written
      */
      function OverwriteFile($path, $message) {
-          if (!file_exists($path)) {
+          if (!file_exists(dirname($path))) {
                mkdir(dirname($path), 0777, true);
           }
 

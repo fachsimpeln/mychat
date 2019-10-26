@@ -123,7 +123,7 @@
                }
 
                if (hash_equals($loginToken, $loginInfo['login_token'])) {
-                    $stmt = $this->pdo->prepare("SELECT `usr_email`, `usr_username`, `usr_password` FROM `mc_users` WHERE `usr_id`=:usrid");
+                    $stmt = $this->pdo->prepare("SELECT `usr_id`, `usr_email`, `usr_username`, `usr_password` FROM `mc_users` WHERE `usr_id`=:usrid");
                     $stmt->bindParam(':usrid', strval($loginInfo['usr_id']));
                     $stmt->execute();
 

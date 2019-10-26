@@ -72,11 +72,15 @@
           */
           public function PrepareTextMessage($senderID, $receiverID, $text) {
                $message = array();
+
+               $timeofsend = time();
+
+               $message['id'] = md5($senderID . $receiverID . $timeofsend) . rand(0, getrandmax());
                $message['sender'] = $senderID;
                $message['receiver'] = $receiverID;
                $message['text'] = $text;
                $message['type'] = 'text';
-               $message['time'] = time();
+               $message['time'] = $timeofsend;
 
                if (!$this->ValidateTextMessage($message)) {
                     return false;

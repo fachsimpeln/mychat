@@ -78,7 +78,7 @@
                $message['type'] = 'text';
                $message['time'] = time();
 
-               if (!$this->ValidateMessage($message)) {
+               if (!$this->ValidateTextMessage($message)) {
                     return false;
                }
                $this->message = json_encode($message);

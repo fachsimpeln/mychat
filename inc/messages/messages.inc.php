@@ -81,7 +81,7 @@
                if (!$this->ValidateMessage($message)) {
                     return false;
                }
-               $this->message = $message;
+               $this->message = json_encode($message);
                return true;
           }
 
@@ -106,14 +106,14 @@
           }
 
           /**
-          * GetFileName
+          * GetConversationPath
           * Gets filename for message in conversation between $senderID and $receiverID
           *
           * @param int $senderID Internal db user id of sender
           * @param int $receiverID Internal db user id of receiver
           * @return string Filename for message 1.2/2019-10-26.json
           */
-          public function GetFileName($senderID, $receiverID) {
+          public function GetConversationPath($senderID, $receiverID) {
                $filename = '';
                if (intval($senderID) < intval($receiverID)) {
                     $filename .= $senderID . '.' . $receiverID;
@@ -122,6 +122,25 @@
                }
                $date = date('Y-m-d', time());
                $filename .= '/' . $date . '.json';
+               return $filename;
+          }
+
+          /**
+          * GetLastMessagePath
+          * Gets filename for last message in conversation between $senderID and $receiverID
+          *
+          * @param int $senderID Internal db user id of sender
+          * @param int $receiverID Internal db user id of receiver
+          * @return string Filename for message 1.2/lastmessage.json
+          */
+          public function GetLastMessagePath($senderID, $receiverID) {
+               $filename = '';
+               if (intval($senderID) < intval($receiverID)) {
+                    $filename .= $senderID . '.' . $receiverID;
+               } else {
+                    $filename .= $receiverID . '.' . $senderID;
+               }
+               $filename .= '/lastmessage.json';
                return $filename;
           }
 

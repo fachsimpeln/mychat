@@ -39,13 +39,61 @@
                die($messages->errorMessage);
           }
 
-          $conversationFilename = '../messages/conversation/' . $messages->GetFileName($usrID, $receiverID);
+          $conversationPath = '../messages/conversation/' . $messages->GetConversationPath($usrID, $receiverID);
 
-          $unreadFilename = '../messages/user/' . $receiverID . '/unread.json';
+          $lastmessagePath = '../messages/conversation/' . $messages->GetLastMessagePath($usrID, $receiverID);
 
+          $unreadPath = '../messages/user/' . $receiverID . '/unread.json';
 
+          // To read as one JSON use '{"chat": [' . $lines remove last comma . ']}'
+          WriteMessageToFile($conversationPath, $messages->message . ',');
+          WriteMessageToFile($unreadPath, $messages->message . ',');
 
+          OverwriteFile($lastmessagePath, $messages->message);
+
+          die('message_sent');
      }
 
+     /**
+     * WriteMessageToFile
+     * Appends (with file locking) $message to file at $path
+     *
+     * @param string $path Path to file
+     * @param string $message Text to be appended
+     */
+     function WriteMessageToFile($path, $message) {
+          if (!($f = fopen($path, 'a+'))) {
+               die('could_not_open_file');
+          }
+          if (flock($f, LOCK_EX)) {
+               fwrite($f, $message . PHP_EOL);
+               flock($f, LOCK_UN);
+          } else {
+               // Could not aquire lock
+               die('could_not_open_file');
+          }
+          fclose($f);
+     }
+
+     /**
+     * OverwriteFile
+     * Overwrite a file (with file locking) to $message at $path
+     *
+     * @param string $path Path to file
+     * @param string $message Text to be written
+     */
+     function OverwriteFile($path, $message) {
+          if (!($f = fopen($path, 'w'))) {
+               die('could_not_open_file');
+          }
+          if (flock($f, LOCK_EX)) {
+               fwrite($f, $message);
+               flock($f, LOCK_UN);
+          } else {
+               // Could not aquire lock
+               die('could_not_open_file');
+          }
+          fclose($f);
+     }
 
 ?>

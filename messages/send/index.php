@@ -63,6 +63,10 @@
      * @param string $message Text to be appended
      */
      function WriteMessageToFile($path, $message) {
+          if (!file_exists($path)) {
+               mkdir(dirname($path), 0777, true);
+          }
+
           if (!($f = fopen($path, 'a+'))) {
                die('could_not_open_file');
           }
@@ -84,6 +88,10 @@
      * @param string $message Text to be written
      */
      function OverwriteFile($path, $message) {
+          if (!file_exists($path)) {
+               mkdir(dirname($path), 0777, true);
+          }
+
           if (!($f = fopen($path, 'w'))) {
                die('could_not_open_file');
           }

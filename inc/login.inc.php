@@ -160,7 +160,7 @@
           }
 
           /**
-          * SetToken
+          * GetToken
           * Saves the session token in the browser cookies
           *
           * @param array $POSTParams POST-Parameters of request
@@ -170,13 +170,13 @@
           {
                $loginInfo = array();
                if (isset($_COOKIE["mc_lid"]) && isset($_COOKIE["mc_lto"])) {
-                    $loginInfo['loginIdentifier'] = $_COOKIE["mc_lid"];
-                    $loginInfo['loginToken'] = $_COOKIE["mc_lto"];
+                    $loginInfo['lid'] = $_COOKIE["mc_lid"];
+                    $loginInfo['lto'] = $_COOKIE["mc_lto"];
                     return $loginInfo;
                }
                if (isset($POSTParams['lid']) && isset($POSTParams['lto'])) {
-                    $loginInfo['loginIdentifier'] = $POSTParams['lid'];
-                    $loginInfo['loginToken'] = $POSTParams['lto'];
+                    $loginInfo['lid'] = $POSTParams['lid'];
+                    $loginInfo['lto'] = $POSTParams['lto'];
                     return $loginInfo;
                }
                return null;

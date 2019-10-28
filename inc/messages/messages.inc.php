@@ -105,6 +105,7 @@
                $message['receiver'] = $receiverID;
                $message['text'] = $text;
                $message['type'] = 'text';
+               $message['unread'] = true;
                $message['time'] = $timeofsend;
 
                if (!$this->ValidateTextMessage($message)) {

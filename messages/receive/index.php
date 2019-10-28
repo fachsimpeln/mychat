@@ -28,14 +28,17 @@
      $output = array();
 
      if ($unread == null || count($unread) == 0) {
-          die(json_encode($output));
+          die(json_encode($output, JSON_PRETTY_PRINT));
      }
 
      $messages = new MessageHandler($pdo);
      foreach ($unread as $key => $value) {
+          $lastmessagePath = '../messages/conversation/' . $messages->GetLastMessagePath($usrID, $key);
+
+          $value['lastMessage'] = $messages->ReadLastMessage($lastmessagePath);
           $output[$messages->GetUsername($key)] = $value;
      }
-     die(json_encode($output));
+     die(json_encode($output, JSON_PRETTY_PRINT));
 
      /**
      * ReadUnreadToFile

@@ -271,5 +271,10 @@
                return array();
           }
 
+          public function ReadConversation($path)
+          {
+               // code...
+          }
+
      }
 ?>

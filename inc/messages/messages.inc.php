@@ -62,6 +62,31 @@
           }
 
           /**
+          * GetUsername
+          * Finds username based on usrID
+          *
+          * @param string $usrID Internal db user id
+          * @return string Username of user (on error empty string)
+          */
+          public function GetUsername($usrID) {
+               $stmt = $this->pdo->prepare("SELECT `usr_username` FROM `mc_users` WHERE `usr_id`=:user");
+               $stmt->bindParam(':user', strval($usrID));
+               $stmt->execute();
+
+               // CHECK IF USER EXISTS
+               $rowCount = $stmt->rowCount();
+               if ($rowCount == 0) {
+                    $this->errorMessage = 'user_does_not_exist';
+                    return '';
+               }
+
+               // GET USER INFORMATION FROM DATABASE
+               $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+               return $userInfo['usr_username'];
+          }
+
+          /**
           * PrepareTextMessage
           * Prepares message to be send to receiver
           *

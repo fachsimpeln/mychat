@@ -48,7 +48,7 @@
 
           // To read as one JSON use '{"chat": [' . $lines remove last comma . ']}'
           WriteMessageToFile($conversationPath, $messages->message . ',');
-          WriteMessageToFile($unreadPath, $messages->message . ',');
+          WriteUnreadToFile($unreadPath, $usrID);
 
           OverwriteFile($lastmessagePath, $messages->message);
 
@@ -78,6 +78,36 @@
                die('could_not_open_file');
           }
           fclose($f);
+     }
+
+     /**
+     * WriteUnreadToFile
+     * Add/Changes entry for unread messages
+     * (with time-based lock)
+     *
+     * @param string $path Path to unread file
+     * @param int $senderID Sender id for message
+     */
+     function WriteUnreadToFile($path, $senderID) {
+          if (!file_exists(dirname($path))) {
+               mkdir(dirname($path), 0777, true);
+          }
+
+          // TIME BASED EDITING
+          // (0), 1, (2), 3, (4), 5, (6), 7, (8), 9
+          while (intval(substr(time(), -1) % 2) == 0) {
+               // WAIT
+          }
+          $json = array();
+          if (file_exists($path)) {
+               $json = json_decode(file_get_contents($path), true);
+          }
+          if (isset($json[$senderID])) {
+               $json[$senderID]['unread'] += 1;
+          } else {
+               $json[$senderID]['unread'] = 1;
+          }
+          file_put_contents($path, json_encode($json));
      }
 
      /**

@@ -136,10 +136,10 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-729792201"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1049591114"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-729792201" class="accordion-body collapse in">
+            <div id="namespace-1049591114" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
@@ -188,8 +188,14 @@ Prepares messages ready to be send</em></p>
                             <section class="span4">
                                                                     <a href="../classes/MessageHandler.html#method___construct" class="">__construct()</a><br />
                                                                     <a href="../classes/MessageHandler.html#method_GetUserID" class="">GetUserID()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_GetUsername" class="">GetUsername()</a><br />
                                                                     <a href="../classes/MessageHandler.html#method_PrepareTextMessage" class="">PrepareTextMessage()</a><br />
-                                                                    <a href="../classes/MessageHandler.html#method_GetFileName" class="">GetFileName()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_GetConversationPath" class="">GetConversationPath()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_GetLastMessagePath" class="">GetLastMessagePath()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_WriteMessageToFile" class="">WriteMessageToFile()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_WriteUnreadToFile" class="">WriteUnreadToFile()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_OverwriteFile" class="">OverwriteFile()</a><br />
+                                                                    <a href="../classes/MessageHandler.html#method_ReadLastMessage" class="">ReadLastMessage()</a><br />
                                                             </section>
                             <section class="span4">
                                                                     <a href="../classes/MessageHandler.html#property_errorMessage" class="">$errorMessage</a><br />
@@ -459,6 +465,44 @@ Finds usrID based on e-mail or username</em></p>
 
                                     <div class="row-fluid">
         <div class="span8 content class">
+            <a id="method_GetUsername" name="method_GetUsername" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">GetUsername()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">GetUsername(string  <span class="argument">$usrID</span>) : string</pre>
+                <p><em>GetUsername
+Finds username based on usrID</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$usrID </td>
+                                <td><p>Internal db user id</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Username of user (on error empty string)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
             <a id="method_PrepareTextMessage" name="method_PrepareTextMessage" class="anchor"></a>
             <article class="method">
                 <h3 class="public ">PrepareTextMessage()</h3>
@@ -507,12 +551,12 @@ Prepares message to be send to receiver</em></p>
 
                                     <div class="row-fluid">
         <div class="span8 content class">
-            <a id="method_GetFileName" name="method_GetFileName" class="anchor"></a>
+            <a id="method_GetConversationPath" name="method_GetConversationPath" class="anchor"></a>
             <article class="method">
-                <h3 class="public ">GetFileName()</h3>
+                <h3 class="public ">GetConversationPath()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">GetFileName(integer  <span class="argument">$senderID</span>, integer  <span class="argument">$receiverID</span>) : string</pre>
-                <p><em>GetFileName
+                <pre class="signature" style="margin-right: 54px;">GetConversationPath(integer  <span class="argument">$senderID</span>, integer  <span class="argument">$receiverID</span>) : string</pre>
+                <p><em>GetConversationPath
 Gets filename for message in conversation between $senderID and $receiverID</em></p>
                 
 
@@ -534,6 +578,208 @@ Gets filename for message in conversation between $senderID and $receiverID</em>
                                     <h4>Returns</h4>
                     string
                                             &mdash; <p>Filename for message 1.2/2019-10-26.json</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_GetLastMessagePath" name="method_GetLastMessagePath" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">GetLastMessagePath()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">GetLastMessagePath(integer  <span class="argument">$senderID</span>, integer  <span class="argument">$receiverID</span>) : string</pre>
+                <p><em>GetLastMessagePath
+Gets filename for last message in conversation between $senderID and $receiverID</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$senderID </td>
+                                <td><p>Internal db user id of sender</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$receiverID </td>
+                                <td><p>Internal db user id of receiver</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>Filename for message 1.2/lastmessage.json</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_WriteMessageToFile" name="method_WriteMessageToFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">WriteMessageToFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">WriteMessageToFile(string  <span class="argument">$path</span>, string  <span class="argument">$message</span>) </pre>
+                <p><em>WriteMessageToFile
+Appends (with file locking) $message to file at $path</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td><p>Path to file</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$message </td>
+                                <td><p>Text to be appended</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_WriteUnreadToFile" name="method_WriteUnreadToFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">WriteUnreadToFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">WriteUnreadToFile(string  <span class="argument">$path</span>, integer  <span class="argument">$senderID</span>) </pre>
+                <p><em>WriteUnreadToFile
+Add/Changes entry for unread messages
+(with time-based lock)</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td><p>Path to unread file</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$senderID </td>
+                                <td><p>Sender id for message</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_OverwriteFile" name="method_OverwriteFile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">OverwriteFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">OverwriteFile(string  <span class="argument">$path</span>, string  <span class="argument">$message</span>) </pre>
+                <p><em>OverwriteFile
+Overwrite a file (with file locking) to $message at $path</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td><p>Path to file</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$message </td>
+                                <td><p>Text to be written</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ReadLastMessage" name="method_ReadLastMessage" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">ReadLastMessage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ReadLastMessage(string  <span class="argument">$path</span>) : array</pre>
+                <p><em>ReadLastMessage
+Reads last message in chat and returns last message as array</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td><p>Path to file</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Last message read from file (on error empty array)</p>
                                     				
                             </article>
         </div>
@@ -635,7 +881,7 @@ Validates prepared text message by PrepareTextMessage()</em></p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on October 26th, 2019 at 10:53.
+                    on October 28th, 2019 at 18:28.
                 </section>
             </section>
         </section>

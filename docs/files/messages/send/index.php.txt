@@ -3,6 +3,7 @@
      // INITIALIZE
      require '../../inc/db.inc.php';
      require '../../inc/login.inc.php';
+     require '../../inc/permission/permission.inc.php';
      require '../../inc/messages/messages.inc.php';
      require '../../inc/security/xss.inc.php';
      $pdo = DatabaseConnection::connect();
@@ -39,14 +40,20 @@
                die($messages->errorMessage);
           }
 
-          $conversationFilename = '../messages/conversation/' . $messages->GetFileName($usrID, $receiverID);
+          $conversationPath = '../messages/conversation/' . $messages->GetConversationPath($usrID, $receiverID);
 
-          $unreadFilename = '../messages/user/' . $receiverID . '/unread.json';
+          $lastmessagePath = '../messages/conversation/' . $messages->GetLastMessagePath($usrID, $receiverID);
 
+          $unreadPath = '../messages/user/' . $receiverID . '/unread.json';
 
+          // To read as one JSON use '{"chat": [' . $lines remove last comma . ']}'
+          $messages->WriteMessageToFile($conversationPath, $messages->message . ',');
+          $messages->WriteUnreadToFile($unreadPath, $usrID);
 
+          $messages->OverwriteFile($lastmessagePath, $messages->message);
+
+          die('message_sent');
      }
-
 
 ?>
 

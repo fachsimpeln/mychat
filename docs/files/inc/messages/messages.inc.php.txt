@@ -62,6 +62,31 @@
           }
 
           /**
+          * GetUsername
+          * Finds username based on usrID
+          *
+          * @param string $usrID Internal db user id
+          * @return string Username of user (on error empty string)
+          */
+          public function GetUsername($usrID) {
+               $stmt = $this->pdo->prepare("SELECT `usr_username` FROM `mc_users` WHERE `usr_id`=:user");
+               $stmt->bindParam(':user', strval($usrID));
+               $stmt->execute();
+
+               // CHECK IF USER EXISTS
+               $rowCount = $stmt->rowCount();
+               if ($rowCount == 0) {
+                    $this->errorMessage = 'user_does_not_exist';
+                    return '';
+               }
+
+               // GET USER INFORMATION FROM DATABASE
+               $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+
+               return $userInfo['usr_username'];
+          }
+
+          /**
           * PrepareTextMessage
           * Prepares message to be send to receiver
           *
@@ -72,16 +97,20 @@
           */
           public function PrepareTextMessage($senderID, $receiverID, $text) {
                $message = array();
+
+               $timeofsend = time();
+
+               $message['id'] = md5($senderID . $receiverID . $timeofsend) . rand(0, getrandmax());
                $message['sender'] = $senderID;
                $message['receiver'] = $receiverID;
                $message['text'] = $text;
                $message['type'] = 'text';
-               $message['time'] = time();
+               $message['time'] = $timeofsend;
 
-               if (!$this->ValidateMessage($message)) {
+               if (!$this->ValidateTextMessage($message)) {
                     return false;
                }
-               $this->message = $message;
+               $this->message = json_encode($message);
                return true;
           }
 
@@ -106,14 +135,14 @@
           }
 
           /**
-          * GetFileName
+          * GetConversationPath
           * Gets filename for message in conversation between $senderID and $receiverID
           *
           * @param int $senderID Internal db user id of sender
           * @param int $receiverID Internal db user id of receiver
           * @return string Filename for message 1.2/2019-10-26.json
           */
-          public function GetFileName($senderID, $receiverID) {
+          public function GetConversationPath($senderID, $receiverID) {
                $filename = '';
                if (intval($senderID) < intval($receiverID)) {
                     $filename .= $senderID . '.' . $receiverID;
@@ -123,6 +152,123 @@
                $date = date('Y-m-d', time());
                $filename .= '/' . $date . '.json';
                return $filename;
+          }
+
+          /**
+          * GetLastMessagePath
+          * Gets filename for last message in conversation between $senderID and $receiverID
+          *
+          * @param int $senderID Internal db user id of sender
+          * @param int $receiverID Internal db user id of receiver
+          * @return string Filename for message 1.2/lastmessage.json
+          */
+          public function GetLastMessagePath($senderID, $receiverID) {
+               $filename = '';
+               if (intval($senderID) < intval($receiverID)) {
+                    $filename .= $senderID . '.' . $receiverID;
+               } else {
+                    $filename .= $receiverID . '.' . $senderID;
+               }
+               $filename .= '/lastmessage.json';
+               return $filename;
+          }
+
+          /**
+          * WriteMessageToFile
+          * Appends (with file locking) $message to file at $path
+          *
+          * @param string $path Path to file
+          * @param string $message Text to be appended
+          */
+          public function WriteMessageToFile($path, $message) {
+               if (!file_exists(dirname($path))) {
+                    mkdir(dirname($path), 0777, true);
+               }
+
+               if (!($f = fopen($path, 'a+'))) {
+                    die('could_not_open_file');
+               }
+               if (flock($f, LOCK_EX)) {
+                    fwrite($f, $message . PHP_EOL);
+                    flock($f, LOCK_UN);
+               } else {
+                    // Could not aquire lock
+                    die('could_not_open_file');
+               }
+               fclose($f);
+          }
+
+          /**
+          * WriteUnreadToFile
+          * Add/Changes entry for unread messages
+          * (with time-based lock)
+          *
+          * @param string $path Path to unread file
+          * @param int $senderID Sender id for message
+          */
+          public function WriteUnreadToFile($path, $senderID) {
+               if (!file_exists(dirname($path))) {
+                    mkdir(dirname($path), 0777, true);
+               }
+
+               // TIME BASED EDITING
+               // (0), 1, (2), 3, (4), 5, (6), 7, (8), 9
+               while (intval(substr(time(), -1) % 2) == 0) {
+                    // WAIT
+               }
+               $json = array();
+               if (file_exists($path)) {
+                    $json = json_decode(file_get_contents($path), true);
+               }
+               if (isset($json[$senderID])) {
+                    $json[$senderID]['unread'] += 1;
+               } else {
+                    $json[$senderID]['unread'] = 1;
+               }
+               file_put_contents($path, json_encode($json));
+          }
+
+          /**
+          * OverwriteFile
+          * Overwrite a file (with file locking) to $message at $path
+          *
+          * @param string $path Path to file
+          * @param string $message Text to be written
+          */
+          public function OverwriteFile($path, $message) {
+               if (!file_exists(dirname($path))) {
+                    mkdir(dirname($path), 0777, true);
+               }
+
+               if (!($f = fopen($path, 'w'))) {
+                    die('could_not_open_file');
+               }
+               if (flock($f, LOCK_EX)) {
+                    fwrite($f, $message);
+                    flock($f, LOCK_UN);
+               } else {
+                    // Could not aquire lock
+                    die('could_not_open_file');
+               }
+               fclose($f);
+          }
+
+          /**
+          * ReadLastMessage
+          * Reads last message in chat and returns last message as array
+          *
+          * @param string $path Path to file
+          * @return array Last message read from file (on error empty array)
+          */
+          public function ReadLastMessage($path) {
+               if (file_exists($path) && filesize($path) > 0) {
+                    $lastMessage = "";
+                    while ($lastMessage == "") {
+                         $lastMessage = file_get_contents($path);
+                    }
+                    return json_decode($lastMessage, true);
+               }
+               return array();
           }
 
      }

@@ -23,13 +23,10 @@
      // GET USR-ID
      $usrID = $loginHandler->usrID;
 
+     // Read all random messages
      $unreadPath = '../messages/user/' . $usrID . '/unread.json';
-     $unread = ReadUnreadToFile($unreadPath, $usrID);
+     $unread = ReadUnreadFromFile($unreadPath, $usrID);
      $output = array();
-
-     if ($unread == null || count($unread) == 0) {
-          die(json_encode($output, JSON_PRETTY_PRINT));
-     }
 
      $messages = new MessageHandler($pdo);
      foreach ($unread as $key => $value) {
@@ -38,17 +35,27 @@
           $value['lastMessage'] = $messages->ReadLastMessage($lastmessagePath);
           $output[$messages->GetUsername($key)] = $value;
      }
+
+     // Read all last messages from all friends (sort by last messages)
+     // Read friends from db
+
+     // Read last message from one chat
+     $last_friend = '../messages/conversation/' . $messages->GetLastMessagePath($usrID, $key);
+
+
+
+
      die(json_encode($output, JSON_PRETTY_PRINT));
 
      /**
-     * ReadUnreadToFile
+     * ReadUnreadFromFile
      * Reads entry for unread messages
      *
      * @param string $path Path to unread file
      * @param int $usrID Logged in user-id
      * @return array Returns all unread messages (on error null)
      */
-     function ReadUnreadToFile($path, $usrID) {
+     function ReadUnreadFromFile($path, $usrID) {
           $json = null;
           if (file_exists($path)) {
                $json = json_decode(file_get_contents($path), true);

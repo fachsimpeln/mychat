@@ -6,10 +6,8 @@
      */
 
      // INITIALIZE
-     require '../../inc/db.inc.php';
-     require '../../inc/login.inc.php';
-     require '../../inc/messages/messages.inc.php';
-     require '../../inc/security/xss.inc.php';
+     require '../../inc/autoload.php';
+     
      $pdo = DatabaseConnection::connect();
 
      // CHECK USER AUTH

@@ -186,7 +186,8 @@
                     mkdir(dirname($path), 0777, true);
                }
 
-               if (!($f = fopen($path, 'a+'))) {
+               $f = fopen($path, 'a+');
+               if (!($f)) {
                     die('could_not_open_file');
                }
                if (flock($f, LOCK_EX)) {
@@ -214,8 +215,10 @@
 
                // TIME BASED EDITING
                // (0), 1, (2), 3, (4), 5, (6), 7, (8), 9
+               $tries = 0;
                while (intval(substr(time(), -1) % 2) == 0) {
                     // WAIT
+                    $tries += 1;
                }
                $json = array();
                if (file_exists($path)) {
@@ -241,7 +244,8 @@
                     mkdir(dirname($path), 0777, true);
                }
 
-               if (!($f = fopen($path, 'w'))) {
+               $f = fopen($path, 'w');
+               if (!($f)) {
                     die('could_not_open_file');
                }
                if (flock($f, LOCK_EX)) {

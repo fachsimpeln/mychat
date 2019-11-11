@@ -12,7 +12,7 @@
      $loginHandler = new LoginHandler($pdo);
      if (!$loginHandler->LoginUser($email, $password)) {
           // NOT AUTHENTICATED
-          die('no_auth' . '<br />' . $loginHandler->errorMessage);
+          die('no_auth<br />' . $loginHandler->errorMessage);
      }
      // GET USR-ID
      $usrID = $loginHandler->usrID;

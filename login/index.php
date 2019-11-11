@@ -2,6 +2,7 @@
 
      if (isset($_POST['submit'])) {
           // Decrypt
+          die();
      }
 
 ?>

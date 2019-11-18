@@ -21,3 +21,5 @@ jobs:
 
     - name: PHPUnit (php-actions)
       uses: php-actions/phpunit@v0.2.0
+      with:
+        config: test/unit/phpunit.xml

@@ -268,6 +268,7 @@
           public function ReadLastMessage($path) {
                if (file_exists($path) && filesize($path) > 0) {
                     $lastMessage = "";
+                    // WAIT UNTIL LOCK IS OBTAINED
                     while ($lastMessage == "") {
                          $lastMessage = file_get_contents($path);
                     }
@@ -276,9 +277,29 @@
                return array();
           }
 
+          /**
+          * ReadConversation
+          * Reads all message in a specific chat (2019-11-18.json) and returns all messages as array
+          *
+          * @param string $path Path to file
+          * @return array Messages read from file (on error empty array)
+          */
           public function ReadConversation($path)
           {
-               // code...
+               if (file_exists($path) && filesize($path) > 0) {
+                    $allMessages = "";
+                    // WAIT UNTIL LOCK IS OBTAINED
+                    while ($allMessages == "") {
+                         $allMessages = file_get_contents($path);
+                    }
+
+                    // Make one JSON String
+
+                    $allMessages = '{"chat": [' . rtrim($allMessages, ',') . ']}';
+
+                    return json_decode($allMessages, true);
+               }
+               return array();
           }
 
      }

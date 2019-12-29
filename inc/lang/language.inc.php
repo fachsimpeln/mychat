@@ -6,7 +6,7 @@
       *
       * @author fachsimpeln
       * @category Language
-      * @version language.system.db, v1.0, 2019-10-28
+      * @version language.system.db, v2.0, 2019-12-29
       */
      class LanguageHandler
      {
@@ -22,19 +22,57 @@
           */
           function __construct($lang, $pathLang = './languages')
           {
-               $this->$langTable = json_decode(file_get_contents($pathLang . '/' . $lang . '.json'), true);
+               // Check if valid lang-code (format: en-US)
+               $re = '/^[a-zA-Z]+-[a-zA-Z]+$/m';
+               preg_match_all($re, $lang, $matches, PREG_SET_ORDER, 0);
+
+               if (count($matches) > 0) {
+                    $file = $pathLang . '/' . $lang . '.json';
+               } else {
+                    $file = $pathLang . '/en-us.json';
+               }
+
+               // Check if actually exists
+               if (!file_exists($file)) {
+                    $file = $pathLang . '/en-us.json';
+               }
+
+               // Set langTable to the json-decoded flattend array from the language file
+               $this->$langTable = $this->array_flatten(json_decode(file_get_contents($file), true));
           }
 
           /**
           * GetString
           * Gets string in chosen language based on supplied id
           *
-          * @param string $id ID of the string which should be printed
+          * @param string $id ID of the string which should be printed (format: homepage-head-title)
           * @return string String in chosen language
           */
           public function GetString($id)
           {
                return $langTable[$id];
+          }
+
+          /**
+          * ArrayFlatten
+          * Flattens an multidimensional array to a single dimensional array with a seperator (suffix) to the key
+          *
+          * @param array $array Array to be flattend
+          * @param string $suffix Suffix to seperate the keys (-)
+          * @param string $prefix Prefix to add to the keys
+          * @return array Flattend single dimensional array
+          */
+          private function array_flatten($array, $suffix = '-', $prefix = '') {
+              $result = array();
+              foreach ($array as $key => $value) {
+                  if (is_array($value)) {
+                      $result = $result + array_flatten($value, $suffix, $prefix . $key . $suffix);
+                  }
+                  else {
+                      $result[$prefix . $key] = $value;
+                  }
+              }
+              return $result;
           }
      }
 

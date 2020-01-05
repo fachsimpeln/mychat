@@ -7,7 +7,7 @@
      require $bd . 'cookie' . DIRECTORY_SEPARATOR . 'cookie.inc.php';
 
      require $bd . 'security' . DIRECTORY_SEPARATOR . 'xss.inc.php';
-     require $bd . 'security' . DIRECTORY_SEPARATOR . 'crsf.inc.php';
+     require $bd . 'security' . DIRECTORY_SEPARATOR . 'csrf.inc.php';
 
      require $bd . 'permission' . DIRECTORY_SEPARATOR . 'permission.inc.php';
      require $bd . 'messages' . DIRECTORY_SEPARATOR . 'messages.inc.php';

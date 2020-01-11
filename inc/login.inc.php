@@ -155,8 +155,8 @@
           */
           public function SetToken($loginIdentifier, $loginToken, $expires)
           {
-               setcookie("mc_lid", $loginIdentifier, intval($expires), '/', $_SERVER['HTTP_HOST'], true, true);
-               setcookie("mc_lto", $loginToken, intval($expires), '/', $_SERVER['HTTP_HOST'], true, true);
+               CookieHandler::SetCookie("mc_lid", $loginIdentifier, true, intval($expires));
+               CookieHandler::SetCookie("mc_lto", $loginToken, true, intval($expires));
           }
 
           /**
@@ -480,7 +480,7 @@
                // SET COOKIE TO USERS BROWSER
                $expires = time();
                $expires += 24 * 60 * 60 * 30 * 6; // 24h * 30d * 6 = 6 months
-               setcookie("mc_dc", $devicecookie, intval($expires), '/', $_SERVER['HTTP_HOST'], true, true);
+               CookieHandler::SetCookie("mc_dc", $devicecookie, true, intval($expires));
           }
 
 

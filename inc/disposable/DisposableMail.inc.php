@@ -1,0 +1,143 @@
+<?php
+
+     /**
+     * DisposableMail
+     * Checks e-mail addresses. It checks if they are in a spam-mail (trashmail) list.
+     * credits: see below
+     *
+     * @author fachsimpeln
+     * @category Register System
+     * @version register.system.db, v1.0, 2020-01-11
+     */
+     class DisposableMail
+     {
+
+          /**
+          * ValidateMail
+          * Check if mail is valid
+          *
+          * @param string $mail E-Mail to be checked
+          * @return bool Valid mail address (true) or Invalid mail address (false)
+          */
+          public function ValidateMail($mail)
+          {
+               $mail = trim($mail);
+
+               // Check if valid mail address
+               if (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+                    return false;
+               }
+
+               // Get domain name of mail
+               $mail = explode("@", $mail);
+               $domain = $mail[count($mail) - 1];
+               $domain = str_replace(' ', '', $domain);
+
+               // Get all disposable email domains
+               $domains = $this->GetDomains();
+
+               //print count($domains);
+
+               // Check if in disposable mail list
+               $firstcheck = !(in_array($domain, $domains));
+               if ($firstcheck) {
+                    // Check on meetchopra
+                    $apikey = dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'apikeys.json';
+                    $apikey = json_decode($apikey, true)['meetchopra'];
+
+                    return $this->meetchopra('privacy@' . $domain, $apikey);
+               }
+               return $firstcheck;
+          }
+
+          /**
+          * GetDomains
+          * Get the list of common trash-mail domains
+          * Refreshes itsself by downloading domains from other github repositories
+          * List credits: see below
+          *
+          * @param int $distance Distance to next download (Standard: 24h)
+          * @return array Domains on blacklist
+          */
+          private function GetDomains($distance = 24 * 60 * 60)
+          {
+               $lastchecked_path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'disposable' . DIRECTORY_SEPARATOR . 'last.txt';
+               $list = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'disposable' . DIRECTORY_SEPARATOR . 'cache.json';
+
+               // Check if should download or load from cache
+               $download = true;
+               if (file_exists($lastchecked_path) && file_exists($list)) {
+                    $lastchecked = intval(file_get_contents($lastchecked_path));
+                    if ($lastchecked > 0) {
+                         if ($lastchecked >= time() - $distance) {
+                         $download = false;
+                         }
+                    }
+               }
+
+               $domains = array();
+
+               if ($download) {
+                    $domains1 = json_decode(str_replace("\r", '', str_replace('\r', '', file_get_contents("https://raw.githubusercontent.com/PHPAuth/PHPAuth/master/files/domains.json"))), true);
+
+                    $domains2 = explode("\n", str_replace("\r", '', str_replace('\r', '', file_get_contents("https://gist.githubusercontent.com/adamloving/4401361/raw/e81212c3caecb54b87ced6392e0a0de2b6466287/temporary-email-address-domains"))));
+
+                    $domains3 = explode("\n", str_replace("\r", '', str_replace('\r', '', file_get_contents("https://gist.githubusercontent.com/michenriksen/8710649/raw/e09ee253960ec1ff0add4f92b62616ebbe24ab87/disposable-email-provider-domains"))));
+
+                    $domains4 = json_decode(str_replace("\r", '', str_replace('\r', '', file_get_contents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'disposable' . DIRECTORY_SEPARATOR . 'local' . DIRECTORY_SEPARATOR . 'netgrows.json'))), true);
+
+                    $domains5 = explode("\n", str_replace("\r", '', str_replace('\r', '', file_get_contents(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'disposable' . DIRECTORY_SEPARATOR . 'local' . DIRECTORY_SEPARATOR . 'own.json'))));
+
+                    $domains = array_values(array_unique(array_merge($domains1, $domains2, $domains3, $domains4, $domains5), SORT_REGULAR));
+
+                    // Save to cache
+                    file_put_contents($list, json_encode($domains));
+                    file_put_contents($lastchecked_path, strval(time()));
+               } else {
+                    // Load from cache
+                    $domains = json_decode(file_get_contents($list), true);
+               }
+               return $domains;
+          }
+
+          /**
+          * meetchopra
+          * Checks the mail with the meetchopra server.
+          * Credits: https://github.com/email-verifier/verifier-php
+          *
+          * @param string|null $email E-Mail to be checked
+          * @param string $access_token API-Token for meetchopra (free)
+          * @param bool $details Show details (Standard: false)
+          * @return bool|array Valid/Invalid (true/false) or whole response from meetchopra ($details = true) as array
+          */
+          private function meetchopra($email = null, $access_token, $details = false)
+          {
+               $result = file_get_contents('https://verifier.meetchopra.com/verify/'. urlencode($email) .'?token='. urlencode($access_token));
+
+               // meetchopra down
+               if ($result === false) {
+                    return true;
+               }
+
+               if ($details) {
+                    return json_decode($result, true);
+               } else {
+                    $data = json_decode($result, true);
+                    return $data['status'];
+               }
+          }
+
+          /*
+          Credits:
+
+          https://raw.githubusercontent.com/PHPAuth/PHPAuth/master/files/domains.json
+
+          https://gist.githubusercontent.com/adamloving/4401361/raw/e81212c3caecb54b87ced6392e0a0de2b6466287/temporary-email-address-domains
+
+          https://gist.githubusercontent.com/michenriksen/8710649/raw/e09ee253960ec1ff0add4f92b62616ebbe24ab87/disposable-email-provider-domains
+
+          https://netgrows.com/dea-cleaner-online-tool/
+
+          https://github.com/email-verifier/verifier-php
+          */
+     }

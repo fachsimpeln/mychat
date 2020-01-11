@@ -58,12 +58,12 @@
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">17</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">24</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
                                 </a>
                             </li>
                             <li>
@@ -88,15 +88,19 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1985494867"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1752404051"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-1985494867" class="accordion-body collapse in">
+            <div id="namespace-1752404051" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                     
                     <ul>
-                                                                                                    <li class="class"><a href="../classes/DatabaseConnection.html">DatabaseConnection</a></li>
+                                                                                                    <li class="class"><a href="../classes/CookieHandler.html">CookieHandler</a></li>
+                                                    <li class="class"><a href="../classes/CRSF.html">CRSF</a></li>
+                                                    <li class="class"><a href="../classes/DatabaseConnection.html">DatabaseConnection</a></li>
+                                                    <li class="class"><a href="../classes/DisposableMail.html">DisposableMail</a></li>
+                                                    <li class="class"><a href="../classes/LanguageHandler.html">LanguageHandler</a></li>
                                                     <li class="class"><a href="../classes/LoginHandler.html">LoginHandler</a></li>
                                                     <li class="class"><a href="../classes/MessageHandler.html">MessageHandler</a></li>
                                                     <li class="class"><a href="../classes/PermissionHandler.html">PermissionHandler</a></li>
@@ -123,8 +127,29 @@
                                         <h2>Classes</h2>
                     <table class="table table-hover">
                                             <tr>
+                            <td><a href="../classes/CookieHandler.html">CookieHandler</a></td>
+                            <td><em>CookieHandler
+Handles setting and reading cookie data</em></td>
+                        </tr>
+                                            <tr>
+                            <td><a href="../classes/CRSF.html">CRSF</a></td>
+                            <td><em>CRSF Protection
+Checks all requests for a valid CRSF Token and issues them
+requires CookieHandler</em></td>
+                        </tr>
+                                            <tr>
                             <td><a href="../classes/DatabaseConnection.html">DatabaseConnection</a></td>
                             <td><em>DatabaseConnection</em></td>
+                        </tr>
+                                            <tr>
+                            <td><a href="../classes/DisposableMail.html">DisposableMail</a></td>
+                            <td><em>DisposableMail
+Checks e-mail addresses. It checks if they are in a spam-mail (trashmail) list.</em></td>
+                        </tr>
+                                            <tr>
+                            <td><a href="../classes/LanguageHandler.html">LanguageHandler</a></td>
+                            <td><em>LanguageHandler
+Provides multiple language support</em></td>
                         </tr>
                                             <tr>
                             <td><a href="../classes/LoginHandler.html">LoginHandler</a></td>
@@ -213,12 +238,64 @@ Prevent XSS attacks by replacing all html tag with the special chars
 
                                         <div class="row-fluid">
         <div class="span8 content class">
-            <a id="method_ReadUnreadToFile" name="method_ReadUnreadToFile" class="anchor"></a>
+            <a id="method_ReadUnreadFromFile" name="method_ReadUnreadFromFile" class="anchor"></a>
             <article class="method">
-                <h3 class=" ">ReadUnreadToFile()</h3>
+                <h3 class=" ">ReadUnreadFromFile()</h3>
                 <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">ReadUnreadToFile(string  <span class="argument">$path</span>, integer  <span class="argument">$usrID</span>) : array</pre>
-                <p><em>ReadUnreadToFile
+                <pre class="signature" style="margin-right: 54px;">ReadUnreadFromFile(string  <span class="argument">$path</span>, integer  <span class="argument">$usrID</span>) : array</pre>
+                <p><em>ReadUnreadFromFile
+Reads entry for unread messages</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$path </td>
+                                <td><p>Path to unread file</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$usrID </td>
+                                <td><p>Logged in user-id</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>Returns all unread messages (on error null)</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                    <dt>File</dt>
+                    <dd><a href=""><div class="path-wrapper"></div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ReadUnreadFromFile" name="method_ReadUnreadFromFile" class="anchor"></a>
+            <article class="method">
+                <h3 class=" ">ReadUnreadFromFile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ReadUnreadFromFile(string  <span class="argument">$path</span>, integer  <span class="argument">$usrID</span>) : array</pre>
+                <p><em>ReadUnreadFromFile
 Reads entry for unread messages</em></p>
                 
 
@@ -303,7 +380,7 @@ Reads entry for unread messages</em></p>
                 <section class="span10 offset1">
                     <hr />
                     Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on October 28th, 2019 at 18:28.
+                    on January 11th, 2020 at 21:03.
                 </section>
             </section>
         </section>

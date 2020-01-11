@@ -1,9 +1,7 @@
 <?php
 
      // INITIALIZE
-     require '../inc/db.inc.php';
-     require '../inc/login.inc.php';
-     require '../inc/security/xss.inc.php';
+     require '../inc/autoload.php';
      $pdo = DatabaseConnection::connect();
 
      // GET USER AUTH
@@ -14,7 +12,7 @@
      $loginHandler = new LoginHandler($pdo);
      if (!$loginHandler->LoginUser($email, $password)) {
           // NOT AUTHENTICATED
-          die('no_auth' . '<br />' . $loginHandler->errorMessage);
+          die('no_auth<br />' . $loginHandler->errorMessage);
      }
      // GET USR-ID
      $usrID = $loginHandler->usrID;

@@ -105,6 +105,7 @@
                $message['receiver'] = $receiverID;
                $message['text'] = $text;
                $message['type'] = 'text';
+               $message['unread'] = true;
                $message['time'] = $timeofsend;
 
                if (!$this->ValidateTextMessage($message)) {
@@ -185,7 +186,8 @@
                     mkdir(dirname($path), 0777, true);
                }
 
-               if (!($f = fopen($path, 'a+'))) {
+               $f = fopen($path, 'a+');
+               if (!($f)) {
                     die('could_not_open_file');
                }
                if (flock($f, LOCK_EX)) {
@@ -213,8 +215,10 @@
 
                // TIME BASED EDITING
                // (0), 1, (2), 3, (4), 5, (6), 7, (8), 9
+               $tries = 0;
                while (intval(substr(time(), -1) % 2) == 0) {
                     // WAIT
+                    $tries += 1;
                }
                $json = array();
                if (file_exists($path)) {
@@ -240,7 +244,8 @@
                     mkdir(dirname($path), 0777, true);
                }
 
-               if (!($f = fopen($path, 'w'))) {
+               $f = fopen($path, 'w');
+               if (!($f)) {
                     die('could_not_open_file');
                }
                if (flock($f, LOCK_EX)) {
@@ -263,10 +268,36 @@
           public function ReadLastMessage($path) {
                if (file_exists($path) && filesize($path) > 0) {
                     $lastMessage = "";
+                    // WAIT UNTIL LOCK IS OBTAINED
                     while ($lastMessage == "") {
                          $lastMessage = file_get_contents($path);
                     }
                     return json_decode($lastMessage, true);
+               }
+               return array();
+          }
+
+          /**
+          * ReadConversation
+          * Reads all message in a specific chat (2019-11-18.json) and returns all messages as array
+          *
+          * @param string $path Path to file
+          * @return array Messages read from file (on error empty array)
+          */
+          public function ReadConversation($path)
+          {
+               if (file_exists($path) && filesize($path) > 0) {
+                    $allMessages = "";
+                    // WAIT UNTIL LOCK IS OBTAINED
+                    while ($allMessages == "") {
+                         $allMessages = file_get_contents($path);
+                    }
+
+                    // Make one JSON String
+
+                    $allMessages = '{"chat": [' . rtrim($allMessages, ',') . ']}';
+
+                    return json_decode($allMessages, true);
                }
                return array();
           }

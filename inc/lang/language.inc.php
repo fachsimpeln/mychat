@@ -46,11 +46,33 @@
           * Gets string in chosen language based on supplied id
           *
           * @param string $id ID of the string which should be printed (format: homepage-head-title)
+          * @param array $replacements Replacements in string, e.g. {name}; comment out with \ (e.g. \{name\})
           * @return string String in chosen language
           */
-          public function GetString($id)
+          public function GetString($id, $replacements = array())
           {
-               return $langTable[$id];
+               if (count($replacements) == 0) {
+                    return $langTable[$id];
+               }
+               $string = $langTable[$id];
+               foreach ($replacements as $key => $value) {
+                    // Replace {name} with $value when not escaped
+                    $key = preg_quote($key);
+                    $curly_braces = '/(?=[^\\\\]){' . $key . '[^\\\\]?}/m';
+                    $string = preg_replace($curly_braces, $value, $string);
+               }
+
+               // Remove double blackslash to only one (\\ -> \)
+               $blackslash = '/(?:\\\\\\\\)/m';
+               $subst = '\\\\';
+               $string = preg_replace($blackslash, $subst, $string);
+
+               // Remove \{ to { (\{name\} -> {name})
+               $blackslash = '/(?:\\\\(?={)|\\\\(?=}))/m';
+               $subst = '';
+               $string = preg_replace($blackslash, $subst, $string);
+
+               return $string;
           }
 
           /**
